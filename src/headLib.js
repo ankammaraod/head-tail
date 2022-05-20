@@ -1,3 +1,5 @@
+/* eslint-disable no-magic-numbers */
+/* eslint-disable no-useless-catch */
 // const fs = require('fs');
 const joinLines = (contents) => contents.join('\n');
 const splitLines = (contents) => contents.split('\n');
@@ -17,13 +19,14 @@ const head = (option, value, content) => {
   return funRef(content, value);
 };
 
-const headMain = function (readFile, [option, value, ...fileName]) {
-
+const headMain = function (readFile, ...args) {
+  const option = '-n';
+  const value = 10;
   let content;
   try {
-    content = readFile(fileName[0], 'utf8');
+    content = readFile(args[0], 'utf8');
   } catch (error) {
-    return error.name;
+    throw error;
   }
   return head(option, value, content);
 };
