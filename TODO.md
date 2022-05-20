@@ -1,9 +1,11 @@
 **TODO**
+- [ ] change the contracts of lines and characters
 - [ ] extract joinLines and splitLines into new file
 - [ ] run the noOfLines option from head.js
 - [ ] should i need to change the name of headMain . think in a break
 - [ ] use option for no of lines 
 - [ ] use option for no of characters
+
 **Things to be in consideration in mind**
 - [ ] follow `TODO`.
 - [ ] Refactor code in every cycle.
@@ -13,6 +15,7 @@
 - [ ] think about data structure. are Arrays ok or should i need to change
 - [ ] consider default case.
 - [ ] consider more then one file or single file.
+
 **DONE**
 - [x] use the lines and characters function from top level
 - [x] extract joinLines and splitLines in to separate functions
