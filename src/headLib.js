@@ -27,7 +27,10 @@ const headMain = function (readFile, ...args) {
   try {
     content = readFile(files[0], 'utf8');
   } catch (error) {
-    throw error;
+    throw {
+      name: 'FileReadError',
+      message: `Unable to read ${files[0]}`
+    };
   }
   return head(option, value, content);
 };

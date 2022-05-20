@@ -1,15 +1,16 @@
 **TODO**
+- [ ] do validation of options 
 - [ ] write tests for headMain in headLib.js
-- [ ] write tests for main in head.js
 - [ ] extract joinLines and splitLines into new file.
+- [ ] consider more then one file or single file.
 **Things to be in consideration in mind**
 - [ ] follow `TODO`.
 - [ ] Refactor code in every cycle.
 - [ ] work on hard code data .
 
 **MAYBE**
-- [ ] consider more then one file or single file.
-- [x] think about data structure. are Arrays ok or should i need to change
+- [ ] think about head function test that reference is taking or not
+- [ ] write tests for main in head.js
 
 **DONE**
 - [x] write a parser that will take arguments nad gives structured parameters
@@ -20,6 +21,7 @@
 - [x] use option for no of characters
 - [x] implement head.js to use from command line
 - [x] change the contracts of lines and characters
+- [x] think about data structure. are Arrays ok or should i need to change
 - [x] should i need to change the name of headMain . think in a break
 - [x] use the lines and characters function from top level
 - [x] extract joinLines and splitLines in to separate functions
