@@ -14,6 +14,7 @@
 - [ ] consider default case.
 - [ ] consider more then one file or single file.
 **DONE**
+- [x] use the lines and characters function from top level
 - [x] extract joinLines and splitLines in to separate functions
 - [x] refactor filter with slice
 - [x] use parameter for no of characters

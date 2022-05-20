@@ -11,5 +11,13 @@ const lines = (contents, noOfLines) => {
   return contents.slice(0, noOfLines);
 };
 
+const headMain = function (readFile, [option, value, fileName]) {
+  const keys = { '-n': lines, '-c': characters };
+  const funRef = keys[option];
+  const contents = ['hai', 'hello'];
+  return joinLines(funRef(contents, value));
+};
+
 exports.lines = lines;
 exports.characters = characters;
+exports.headMain = headMain;
