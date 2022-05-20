@@ -1,18 +1,17 @@
 **TODO**
-- [ ] extract joinLines and splitLines into new file.
+- [ ] write a parser that will take arguments nad gives structured parameters
+- [ ] consider default case.
 - [ ] write tests for headMain in headLib.js
 - [ ] write tests for main in head.js
-- [ ] should i need to change the name of headMain . think in a break
-- [ ] write a parser that will take arguments nad gives structured parameters
+- [ ] extract joinLines and splitLines into new file.
 **Things to be in consideration in mind**
 - [ ] follow `TODO`.
 - [ ] Refactor code in every cycle.
 - [ ] work on hard code data .
 
 **MAYBE**
-- [ ] think about data structure. are Arrays ok or should i need to change
-- [ ] consider default case.
 - [ ] consider more then one file or single file.
+- [x] think about data structure. are Arrays ok or should i need to change
 
 **DONE**
 - [x] add more test to head
@@ -21,6 +20,7 @@
 - [x] use option for no of characters
 - [x] implement head.js to use from command line
 - [x] change the contracts of lines and characters
+- [x] should i need to change the name of headMain . think in a break
 - [x] use the lines and characters function from top level
 - [x] extract joinLines and splitLines in to separate functions
 - [x] refactor filter with slice
