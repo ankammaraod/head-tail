@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 const assert = require('assert');
-const { lines } = require('../src/headMain.js');
+const { lines } = require('../src/headLib.js');
 
 describe('lines', () => {
   it('should give single line', () => {
