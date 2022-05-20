@@ -1,6 +1,5 @@
 **TODO**
 - [ ] run the noOfLines option from head.js
-- [ ] add character function
 - [ ] should i need to change the name of headMain . think in a break
 - [ ] use option for no of lines 
 - [ ] use option for no of characters
@@ -14,6 +13,7 @@
 - [ ] consider default case.
 - [ ] consider more then one file or single file.
 **DONE**
+- [x] add character function
 - [x] change the file names from `headMain` to `headLib` 
 - [x] ~~extract filter from headMain function~~
 - [x] change the headMain to lines function
