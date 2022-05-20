@@ -1,10 +1,9 @@
 **TODO**
-- [ ] extract joinLines and splitLines into new file
-- [ ] run the noOfLines option from head.js
+- [ ] extract joinLines and splitLines into new file.
+- [ ] write tests for headMain in headLib.js
+- [ ] write tests for main in head.js
 - [ ] should i need to change the name of headMain . think in a break
-- [ ] use option for no of lines 
-- [ ] use option for no of characters
-
+- [ ] write a parser that will take arguments nad gives structured parameters
 **Things to be in consideration in mind**
 - [ ] follow `TODO`.
 - [ ] Refactor code in every cycle.
@@ -16,6 +15,10 @@
 - [ ] consider more then one file or single file.
 
 **DONE**
+- [x] add more test to head
+- [x] run the noOfLines option from head.js
+- [x] use option for no of lines 
+- [x] use option for no of characters
 - [x] implement head.js to use from command line
 - [x] change the contracts of lines and characters
 - [x] use the lines and characters function from top level

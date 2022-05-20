@@ -18,10 +18,13 @@ const head = (option, value, content) => {
   const funRef = keys[option];
   return funRef(content, value);
 };
-
+const parseArgs = () => {
+  return 0;
+};
 const headMain = function (readFile, ...args) {
   const option = '-n';
-  const value = 10;
+  // const value = 10;
+  const [options, value, ...files] = parseArgs(args);
   let content;
   try {
     content = readFile(args[0], 'utf8');
