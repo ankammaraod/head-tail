@@ -1,3 +1,4 @@
+// const fs = require('fs');
 const joinLines = (contents) => contents.join('\n');
 const splitLines = (contents) => contents.split('\n');
 
@@ -10,13 +11,24 @@ const lines = (contents, noOfLines) => {
   return joinLines(splittedLines.slice(0, noOfLines));
 };
 
-const headMain = function (readFile, [option, value, fileName]) {
+const head = (option, value, content) => {
   const keys = { '-n': lines, '-c': characters };
   const funRef = keys[option];
-  const contents = 'hai\nhello';
-  return funRef(contents, value);
+  return funRef(content, value);
+};
+
+const headMain = function (readFile, [option, value, ...fileName]) {
+
+  let content;
+  try {
+    content = readFile(fileName[0], 'utf8');
+  } catch (error) {
+    return error.name;
+  }
+  return head(option, value, content);
 };
 
 exports.lines = lines;
 exports.characters = characters;
+exports.head = head;
 exports.headMain = headMain;

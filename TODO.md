@@ -1,5 +1,4 @@
 **TODO**
-- [ ] change the contracts of lines and characters
 - [ ] extract joinLines and splitLines into new file
 - [ ] run the noOfLines option from head.js
 - [ ] should i need to change the name of headMain . think in a break
@@ -17,6 +16,8 @@
 - [ ] consider more then one file or single file.
 
 **DONE**
+- [x] implement head.js to use from command line
+- [x] change the contracts of lines and characters
 - [x] use the lines and characters function from top level
 - [x] extract joinLines and splitLines in to separate functions
 - [x] refactor filter with slice

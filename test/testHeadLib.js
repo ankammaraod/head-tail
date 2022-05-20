@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 const assert = require('assert');
-const { lines, characters, headMain } = require('../src/headLib.js');
+const { lines, characters, head } = require('../src/headLib.js');
 
 describe('lines', () => {
   it('should give single line', () => {
@@ -31,11 +31,11 @@ describe('characters', () => {
   });
 });
 
-describe('headMain', () => {
+describe('head', () => {
   it('should give single line from contents', () => {
-    assert.deepStrictEqual(headMain('fun', ['-n', 1, 'file']), 'hai');
+    assert.deepStrictEqual(head('-n', 1, 'hai'), 'hai');
   });
   it('should give single character from contents', () => {
-    assert.deepStrictEqual(headMain('fun', ['-c', 1, 'file']), 'h');
+    assert.deepStrictEqual(head('-c', 1, 'hai'), 'h');
   });
 });
