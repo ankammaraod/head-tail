@@ -3,22 +3,18 @@
 
 const { parseArgs } = require('./parseArgs.js');
 
-const joinLines = (contents) => contents.join('\n');
-const splitLines = (contents) => contents.split('\n');
+const joinLines = (contents, separator) => contents.join(separator);
+const splitLines = (contents, separator) => contents.split(separator);
 
-const characters = (contents, noOfChars) => {
-  return contents.substring(0, noOfChars);
+const extract = (contents, seperator, count) => {
+  const splittedLines = splitLines(contents, seperator);
+  return joinLines(splittedLines.slice(0, count), seperator);
 };
 
-const lines = (contents, noOfLines) => {
-  const splittedLines = splitLines(contents);
-  return joinLines(splittedLines.slice(0, noOfLines));
-};
-
+const getSeparator = (option) => option === '-n' ? '\n' : '';
 const head = (option, value, content) => {
-  const keys = { '-n': lines, '-c': characters };
-  const funRef = keys[option];
-  return funRef(content, value);
+  const seperator = getSeparator(option);
+  return extract(content, seperator, value);
 };
 
 const headMain = function (readFile, ...args) {
@@ -35,7 +31,5 @@ const headMain = function (readFile, ...args) {
   return head(option, value, content);
 };
 
-exports.lines = lines;
-exports.characters = characters;
 exports.head = head;
 exports.headMain = headMain;

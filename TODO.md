@@ -1,4 +1,6 @@
 **TODO**
+- [ ] write test for extract function
+- [ ] refactor the parse and validation
 - [ ] do validation of options 
 - [ ] write tests for headMain in headLib.js
 - [ ] extract joinLines and splitLines into new file.
@@ -9,10 +11,11 @@
 - [ ] work on hard code data .
 
 **MAYBE**
-- [ ] think about head function test that reference is taking or not
 - [ ] write tests for main in head.js
 
 **DONE**
+- [x] remove the references from head
+- [x] think about head function test that reference is taking or not
 - [x] write a parser that will take arguments nad gives structured parameters
 - [x] consider default case.
 - [x] add more test to head
