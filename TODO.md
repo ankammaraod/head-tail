@@ -1,8 +1,10 @@
 **TODO**
 - [ ] run the noOfLines option from head.js
-- [ ] extract filter from headMain function
+- [ ] add character function
 - [ ] should i need to change the name of headMain . think in a break
-- [ ] use option for no of lines
+- [ ] change the file names from `headMain` to `headLib` 
+- [ ] use option for no of lines 
+- [ ] use option for no of characters
 **Things to be in consideration in mind**
 - [ ] follow `TODO`.
 - [ ] Refactor code in every cycle.
@@ -13,10 +15,12 @@
 - [ ] consider default case.
 - [ ] consider more then one file or single file.
 **DONE**
+- [x] ~~extract filter from headMain function~~
+- [x] change the headMain to lines function
 - [x] write test for more than one line.
 - [x] make head works for explicitly for single line 
       if given data contains more than 1 line
-- [x] ~~consider extension for head contract changing to nl~~
+- [x] ~~consider extension for head contract changing to nl contract~~
 - [x] extract the headMain function in newFile.
 - [x] write expectation for test.
 - [x] create testHeadMain.js.

@@ -1,6 +1,7 @@
-const headMain = (contents, noOfLines) => {
+const lines = (contents, noOfLines) => {
   return contents.filter(
     (line, index) => index < noOfLines
   );
 };
-exports.headMain = headMain;
+
+exports.lines = lines;
