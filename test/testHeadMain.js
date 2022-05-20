@@ -1,10 +1,13 @@
 const assert = require('assert');
-
-const headMain = (content) => content;
+const { headMain } = require('../src/headMain.js');
 
 describe('headMain', () => {
   it('should give single line', () => {
-    assert.deepStrictEqual(headMain(['hello']), ['hello']);
-    assert.deepStrictEqual(headMain(['bye']), ['bye']);
+    assert.deepStrictEqual(headMain(['hello'], 1), ['hello']);
+    assert.deepStrictEqual(headMain(['bye'], 1), ['bye']);
+  });
+  it('should give single line from multiple lines', () => {
+    assert.deepStrictEqual(headMain(['hello', 'bye'], 1), ['hello']);
+    assert.deepStrictEqual(headMain(['bye', 'hello'], 1), ['bye']);
   });
 });
