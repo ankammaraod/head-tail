@@ -1,6 +1,4 @@
 **TODO**
-- [ ] write a parser that will take arguments nad gives structured parameters
-- [ ] consider default case.
 - [ ] write tests for headMain in headLib.js
 - [ ] write tests for main in head.js
 - [ ] extract joinLines and splitLines into new file.
@@ -14,6 +12,8 @@
 - [x] think about data structure. are Arrays ok or should i need to change
 
 **DONE**
+- [x] write a parser that will take arguments nad gives structured parameters
+- [x] consider default case.
 - [x] add more test to head
 - [x] run the noOfLines option from head.js
 - [x] use option for no of lines 

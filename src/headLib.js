@@ -1,6 +1,8 @@
 /* eslint-disable no-magic-numbers */
 /* eslint-disable no-useless-catch */
-// const fs = require('fs');
+
+const { parseArgs } = require('./parseArgs.js');
+
 const joinLines = (contents) => contents.join('\n');
 const splitLines = (contents) => contents.split('\n');
 
@@ -18,16 +20,12 @@ const head = (option, value, content) => {
   const funRef = keys[option];
   return funRef(content, value);
 };
-const parseArgs = () => {
-  return 0;
-};
+
 const headMain = function (readFile, ...args) {
-  const option = '-n';
-  // const value = 10;
-  const [options, value, ...files] = parseArgs(args);
+  const { option, value, files } = parseArgs(args);
   let content;
   try {
-    content = readFile(args[0], 'utf8');
+    content = readFile(files[0], 'utf8');
   } catch (error) {
     throw error;
   }
