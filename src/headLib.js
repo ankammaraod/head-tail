@@ -1,5 +1,10 @@
+const joinLines = (contents) => contents.join('\n');
+const splitLines = (contents) => contents.split('\n');
+
 const characters = (contents, noOfChars) => {
-  return contents.join('\n').substring(0, noOfChars).split('\n');
+  const joinedContents = joinLines(contents);
+  const requiredContents = joinedContents.substring(0, noOfChars);
+  return splitLines(requiredContents);
 };
 
 const lines = (contents, noOfLines) => {
