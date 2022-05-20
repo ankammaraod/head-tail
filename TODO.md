@@ -1,4 +1,6 @@
 **TODO**
+- [ ] extract joinLines and splitLines in to separate functions
+- [ ] extract joinLines and splitLines into new file
 - [ ] run the noOfLines option from head.js
 - [ ] should i need to change the name of headMain . think in a break
 - [ ] use option for no of lines 
@@ -13,6 +15,8 @@
 - [ ] consider default case.
 - [ ] consider more then one file or single file.
 **DONE**
+- [x] refactor filter with slice
+- [x] use parameter for no of characters
 - [x] add character function
 - [x] change the file names from `headMain` to `headLib` 
 - [x] ~~extract filter from headMain function~~

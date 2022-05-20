@@ -1,11 +1,9 @@
-const characters = (contents) => {
-  return [contents[0][0]];
+const characters = (contents, noOfChars) => {
+  return contents.join('\n').substring(0, noOfChars).split('\n');
 };
 
 const lines = (contents, noOfLines) => {
-  return contents.filter(
-    (line, index) => index < noOfLines
-  );
+  return contents.slice(0, noOfLines);
 };
 
 exports.lines = lines;

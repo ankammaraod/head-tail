@@ -19,7 +19,11 @@ describe('lines', () => {
 
 describe('characters', () => {
   it('should give single character from contents', () => {
-    assert.deepStrictEqual(characters(['hello']), ['h']);
-    assert.deepStrictEqual(characters(['bye']), ['b']);
+    assert.deepStrictEqual(characters(['hello'], 1), ['h']);
+    assert.deepStrictEqual(characters(['bye'], 1), ['b']);
+  });
+  it('should give two character from contents', () => {
+    assert.deepStrictEqual(characters(['hello'], 2), ['he']);
+    assert.deepStrictEqual(characters(['bye'], 2), ['by']);
   });
 });
