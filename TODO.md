@@ -1,7 +1,4 @@
 **TODO**
-- [ ] refactor the parse and validation
-- [ ] change the contract of parse args and head
-- [ ] write tests for headMain in headLib.js
 - [ ] consider more then one file or single file.
 
 **Things to be in consideration in mind**
@@ -10,8 +7,12 @@
 - [ ] work on hard code data .
 
 **MAYBE**
+- [ ] remove the messy from parseValueAndFile function
+- [ ] write tests for headMain in headLib.js if more then one file is given
 
 **DONE**
+- [x] change the contract of parse args and head
+- [x] refactor the parse and validation
 - [x] remove the complexity from parse args
 - [x] seperate validation from parse args
 - [x] do validation of options 

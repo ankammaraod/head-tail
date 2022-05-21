@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 const { headMain } = require('./src/headLib.js');
 const fs = require('fs');
 

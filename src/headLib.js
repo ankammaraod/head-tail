@@ -8,13 +8,13 @@ const extract = (contents, separators, count) => {
 
 const getSeparator = (flag) => flag === '-n' ? '\n' : '';
 
-const head = (flag, value, content) => {
+const head = ({ flag, value }, content) => {
   const separators = getSeparator(flag);
   return extract(content, separators, value);
 };
 
 const headMain = function (readFile, ...args) {
-  const { flag, value, files } = parseArgs(args);
+  const { option, files } = parseArgs(args);
   let content;
   try {
     content = readFile(files[0], 'utf8');
@@ -24,7 +24,7 @@ const headMain = function (readFile, ...args) {
       message: `Unable to read ${files[0]}`
     };
   }
-  return head(flag, value, content);
+  return head(option, content);
 };
 
 exports.head = head;

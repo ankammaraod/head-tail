@@ -8,22 +8,22 @@ const areOptionsValid = (args) => {
   return true;
 };
 
-const isFlag = (flag) => {
+const isFlag = (element) => {
   const regEx = /-[n,c]/;
-  return regEx.test(flag);
+  return regEx.test(element);
 };
 
 const parseFlagAndValue = (options, element) => {
-  options.flag = element;
+  options.option.flag = element;
   const regEx = /^-.[0-9]/;
   if (regEx.test(element)) {
-    options.value = +element.slice(2);
-    options.flag = element.slice(0, 2);
+    options.option.value = +element.slice(2);
+    options.option.flag = element.slice(0, 2);
   }
 };
 
 const parseValueAndFile = (options, element) => {
-  isFinite(+element) ? options.value = +element :
+  isFinite(+element) ? options.option.value = +element :
     options.files.push(element);
 };
 
@@ -38,12 +38,12 @@ const validate = (args) => {
 
 const parseArgs = (args) => {
   validate(args);
-  const regEx = /-[n,c]/;
+  const regEx = /-[nc]/;
   if (!regEx.test(args[0])) {
-    return { flag: '-n', value: 10, files: args };
+    return { option: { flag: '-n', value: 10 }, files: args };
   }
 
-  const options = { flag: '', value: '', files: [] };
+  const options = { option: { flag: '', value: '' }, files: [] };
   for (let index = 0; index < args.length; index++) {
     isFlag(args[index]) ? parseFlagAndValue(options, args[index]) :
       parseValueAndFile(options, args[index]);
@@ -51,3 +51,5 @@ const parseArgs = (args) => {
   return options;
 };
 exports.parseArgs = parseArgs;
+exports.areOptionsValid = areOptionsValid;
+exports.isFlag = isFlag;

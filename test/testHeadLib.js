@@ -3,16 +3,17 @@ const { head, getSeparator, extract } = require('../src/headLib.js');
 
 describe('head', () => {
   it('should give single line from contents', () => {
-    assert.deepStrictEqual(head('-n', 1, 'hai'), 'hai');
+    assert.deepStrictEqual(head({ flag: '-n', value: 1 }, 'hai'), 'hai');
   });
   it('should give single character from contents', () => {
-    assert.deepStrictEqual(head('-c', 1, 'hai'), 'h');
+    assert.deepStrictEqual(head({ flag: '-c', value: 1 }, 'hai'), 'h');
   });
   it('should give more than single line from contents', () => {
-    assert.deepStrictEqual(head('-n', 2, 'hai\nbye'), 'hai\nbye');
+    assert.deepStrictEqual(head({ flag: '-n', value: 2 },
+      'hai\nbye'), 'hai\nbye');
   });
   it('should give more than single character from contents', () => {
-    assert.deepStrictEqual(head('-c', 2, 'hai'), 'ha');
+    assert.deepStrictEqual(head({ flag: '-c', value: 2 }, 'hai'), 'ha');
   });
 });
 
