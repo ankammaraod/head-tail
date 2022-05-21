@@ -13,10 +13,19 @@ const head = ({ flag, value }, content) => {
   return extract(content, separators, value);
 };
 
+const formatHead = (headContents, files) => {
+  if (headContents.length === 1) {
+    return headContents;
+  }
+  return headContents.map((content, index) => {
+    return `==>${files[index]}<==\n${content}`;
+  });
+};
+
 const headMain = function (readFile, ...args) {
   const { option, files } = parseArgs(args);
   let content;
-  return files.map((file) => {
+  const headContent = files.map((file) => {
     try {
       content = readFile(file, 'utf8');
     } catch (error) {
@@ -27,10 +36,12 @@ const headMain = function (readFile, ...args) {
     }
     return head(option, content);
   }
-  ).join('\n\n');
+  );
+  return formatHead(headContent, files).join('\n\n');
 };
 
 exports.head = head;
 exports.extract = extract;
 exports.getSeparator = getSeparator;
 exports.headMain = headMain;
+exports.formatHead = formatHead;
