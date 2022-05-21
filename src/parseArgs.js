@@ -32,13 +32,13 @@ const validate = (args) => {
   if (args.length === 0) {
     throw {
       name: 'wrongOptions',
-      message: 'problem with options'
+      message: 'usage: head [-n lines | -c bytes] [file ...]'
     };
   }
   if (!areOptionsValid(args)) {
     throw {
       name: 'wrongOptions',
-      message: 'problem with options'
+      message: 'head: can\'t combine line and byte counts'
     };
   }
 };
@@ -46,7 +46,7 @@ const blowIfFileNotExists = (files) => {
   if (files.length === 0) {
     throw {
       name: 'fileError',
-      message: 'file doesnt exists'
+      message: 'usage: head [-n lines | -c bytes] [file ...]'
     };
   }
 };
@@ -54,7 +54,7 @@ const blowIfValueNotValid = (value) => {
   if (value === '' || value === 0) {
     throw {
       name: 'valueError',
-      message: 'value not valid'
+      message: 'head: illegal line count -- 0'
     };
   }
 };
