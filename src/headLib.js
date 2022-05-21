@@ -16,15 +16,18 @@ const head = ({ flag, value }, content) => {
 const headMain = function (readFile, ...args) {
   const { option, files } = parseArgs(args);
   let content;
-  try {
-    content = readFile(files[0], 'utf8');
-  } catch (error) {
-    throw {
-      name: 'FileReadError',
-      message: `Unable to read ${files[0]}`
-    };
+  return files.map((file) => {
+    try {
+      content = readFile(file, 'utf8');
+    } catch (error) {
+      throw {
+        name: 'FileReadError',
+        message: `Unable to read ${file}`
+      };
+    }
+    return head(option, content);
   }
-  return head(option, content);
+  ).join('\n\n');
 };
 
 exports.head = head;

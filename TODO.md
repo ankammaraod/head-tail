@@ -1,5 +1,5 @@
 **TODO**
-- [ ] consider more then one file or single file.
+- [ ] write tests for headMain in headLib.js if more then one file is given
 
 **Things to be in consideration in mind**
 - [ ] follow `TODO`.
@@ -8,9 +8,9 @@
 
 **MAYBE**
 - [ ] remove the messy from parseValueAndFile function
-- [ ] write tests for headMain in headLib.js if more then one file is given
 
 **DONE**
+- [x] consider more then one file or single file.
 - [x] change the contract of parse args and head
 - [x] refactor the parse and validation
 - [x] remove the complexity from parse args
