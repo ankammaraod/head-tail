@@ -1,4 +1,5 @@
-const { parseArgs, areOptionsValid, isFlag } = require('../src/parseArgs.js');
+const { parseArgs, areOptionsValid, isFlag,
+  blowIfFileNotExists, blowIfValueNotValid } = require('../src/parseArgs.js');
 const assert = require('assert');
 
 describe('parseArgs', () => {
@@ -68,5 +69,32 @@ describe('isFlag', () => {
 
   it('should return false if given element is invalid flag ', () => {
     assert.deepStrictEqual(isFlag('-p'), false);
+  });
+});
+
+describe('blowIfFileNotExists', () => {
+  it('should not throw error if file name not exists in object', () => {
+    const actual = blowIfFileNotExists(['a.txt']);
+    assert.deepStrictEqual(actual, undefined);
+  });
+
+  it('should throw error if file name not exists in object', () => {
+    assert.throws(() => blowIfFileNotExists([]), {
+      name: 'fileError',
+      message: 'file doesnt exists'
+    });
+  });
+});
+
+describe('blowIfValueNotValid', () => {
+  it('should throw if value is invalid', () => {
+    assert.throws(() => blowIfValueNotValid(''), {
+      name: 'valueError',
+      message: 'value not valid'
+    });
+    assert.throws(() => blowIfValueNotValid(0), {
+      name: 'valueError',
+      message: 'value not valid'
+    });
   });
 });

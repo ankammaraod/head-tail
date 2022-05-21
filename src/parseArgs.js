@@ -1,5 +1,5 @@
 const areOptionsValid = (args) => {
-  if (args.includes('-c') && args.includes('-n')) {
+  if (/-c[1-9]*/.test(args) && /-n[1-9]*/.test(args)) {
     return false;
   }
   if (/-[^nc]/.test(args)) {
@@ -42,14 +42,20 @@ const validate = (args) => {
     };
   }
 };
-const blowIfFileNotExists = (options) => {
-  if (options.files.length === 0) {
-    throw {};
+const blowIfFileNotExists = (files) => {
+  if (files.length === 0) {
+    throw {
+      name: 'fileError',
+      message: 'file doesnt exists'
+    };
   }
 };
-const blowIfValueNotValid = (option) => {
-  if (option.value === '' || option.value === 0) {
-    throw {};
+const blowIfValueNotValid = (value) => {
+  if (value === '' || value === 0) {
+    throw {
+      name: 'valueError',
+      message: 'value not valid'
+    };
   }
 };
 
@@ -65,10 +71,12 @@ const parseArgs = (args) => {
     isFlag(args[index]) ? parseFlagAndValue(options, args[index]) :
       parseValueAndFile(options, args[index]);
   }
-  blowIfFileNotExists(options);
-  blowIfValueNotValid(options.option);
+  blowIfFileNotExists(options.files);
+  blowIfValueNotValid(options.option.value);
   return options;
 };
 exports.parseArgs = parseArgs;
 exports.areOptionsValid = areOptionsValid;
 exports.isFlag = isFlag;
+exports.blowIfFileNotExists = blowIfFileNotExists;
+exports.blowIfValueNotValid = blowIfValueNotValid;
