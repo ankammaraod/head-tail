@@ -2,17 +2,17 @@
 - [ ] refactor the parse and validation
 - [ ] do validation of options 
 - [ ] write tests for headMain in headLib.js
-- [ ] extract joinLines and splitLines into new file.
 - [ ] consider more then one file or single file.
+
 **Things to be in consideration in mind**
 - [ ] follow `TODO`.
 - [ ] Refactor code in every cycle.
 - [ ] work on hard code data .
 
 **MAYBE**
-- [ ] write tests for main in head.js
 
 **DONE**
+- [x] extract joinLines and splitLines into new file.
 - [x] write test for extract function
 - [x] write test for getSeparator
 - [x] remove the references from head

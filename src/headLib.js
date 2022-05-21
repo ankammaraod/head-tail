@@ -1,10 +1,8 @@
 /* eslint-disable no-magic-numbers */
 /* eslint-disable no-useless-catch */
 
+const { splitLines, joinLines } = require("./stringUtils.js");
 const { parseArgs } = require('./parseArgs.js');
-
-const joinLines = (contents, separator) => contents.join(separator);
-const splitLines = (contents, separator) => contents.split(separator);
 
 const extract = (contents, separators, count) => {
   const splittedLines = splitLines(contents, separators);
