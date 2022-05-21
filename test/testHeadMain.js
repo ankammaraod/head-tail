@@ -25,7 +25,7 @@ describe('HeadMain', () => {
     const mockReadFileSync = shouldReturn('content.txt', 'hello');
     assert.throws(() => headMain(mockReadFileSync, '-n', '4', 'missing.txt'), {
       name: 'FileReadError',
-      message: 'Unable to read missing.txt',
+      message: 'head: missing.txt: No such file or directory',
     });
   });
 

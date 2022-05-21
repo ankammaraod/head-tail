@@ -31,7 +31,7 @@ const headMain = function (readFile, ...args) {
     } catch (error) {
       throw {
         name: 'FileReadError',
-        message: `Unable to read ${file}`
+        message: `head: ${file}: No such file or directory`
       };
     }
     return head(option, content);
