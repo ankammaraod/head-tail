@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 const assert = require('assert');
 const { head, getSeparator, extract } = require('../src/headLib.js');
 

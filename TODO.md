@@ -1,5 +1,6 @@
 **TODO**
 - [ ] refactor the parse and validation
+- [ ] change the contract of parse args and head
 - [ ] write tests for headMain in headLib.js
 - [ ] consider more then one file or single file.
 
@@ -11,6 +12,8 @@
 **MAYBE**
 
 **DONE**
+- [x] remove the complexity from parse args
+- [x] seperate validation from parse args
 - [x] do validation of options 
 - [x] extract joinLines and splitLines into new file.
 - [x] write test for extract function
