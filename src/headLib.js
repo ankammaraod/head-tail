@@ -1,7 +1,7 @@
 /* eslint-disable no-magic-numbers */
 /* eslint-disable no-useless-catch */
 
-const { splitLines, joinLines } = require("./stringUtils.js");
+const { splitLines, joinLines } = require('./stringUtils.js');
 const { parseArgs } = require('./parseArgs.js');
 
 const extract = (contents, separators, count) => {

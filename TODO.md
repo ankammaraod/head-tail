@@ -1,6 +1,5 @@
 **TODO**
 - [ ] refactor the parse and validation
-- [ ] do validation of options 
 - [ ] write tests for headMain in headLib.js
 - [ ] consider more then one file or single file.
 
@@ -12,6 +11,7 @@
 **MAYBE**
 
 **DONE**
+- [x] do validation of options 
 - [x] extract joinLines and splitLines into new file.
 - [x] write test for extract function
 - [x] write test for getSeparator
