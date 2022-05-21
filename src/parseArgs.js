@@ -15,7 +15,7 @@ const isFlag = (element) => {
 
 const parseFlagAndValue = (options, element) => {
   options.option.flag = element;
-  const regEx = /^-.[0-9]/;
+  const regEx = /^-.[1-9]/;
   if (regEx.test(element)) {
     options.option.value = +element.slice(2);
     options.option.flag = element.slice(0, 2);
@@ -47,8 +47,8 @@ const blowIfFileNotExists = (options) => {
     throw {};
   }
 };
-const blowIfValueNotExists = (option) => {
-  if (option.value === '') {
+const blowIfValueNotValid = (option) => {
+  if (option.value === '' || option.value === 0) {
     throw {};
   }
 };
@@ -66,7 +66,7 @@ const parseArgs = (args) => {
       parseValueAndFile(options, args[index]);
   }
   blowIfFileNotExists(options);
-  blowIfValueNotExists(options.option);
+  blowIfValueNotValid(options.option);
   return options;
 };
 exports.parseArgs = parseArgs;
