@@ -61,7 +61,7 @@ describe('areOptionsValid', () => {
   });
 });
 
-describe.only('isFlag', () => {
+describe('isFlag', () => {
   it('should return true if given element is valid flag ', () => {
     assert.deepStrictEqual(isFlag('-n'), true);
   });

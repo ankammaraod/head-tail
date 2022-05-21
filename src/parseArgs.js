@@ -28,11 +28,28 @@ const parseValueAndFile = (options, element) => {
 };
 
 const validate = (args) => {
+
+  if (args.length === 0) {
+    throw {
+      name: 'wrongOptions',
+      message: 'problem with options'
+    };
+  }
   if (!areOptionsValid(args)) {
     throw {
       name: 'wrongOptions',
       message: 'problem with options'
     };
+  }
+};
+const blowIfFileNotExists = (options) => {
+  if (options.files.length === 0) {
+    throw {};
+  }
+};
+const blowIfValueNotExists = (option) => {
+  if (option.value === '') {
+    throw {};
   }
 };
 
@@ -48,6 +65,8 @@ const parseArgs = (args) => {
     isFlag(args[index]) ? parseFlagAndValue(options, args[index]) :
       parseValueAndFile(options, args[index]);
   }
+  blowIfFileNotExists(options);
+  blowIfValueNotExists(options.option);
   return options;
 };
 exports.parseArgs = parseArgs;
