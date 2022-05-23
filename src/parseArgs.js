@@ -19,7 +19,7 @@ const validate = (args) => {
   return areOptionsValid(args);
 };
 
-const blowIfFileNotExists = (files) => {
+const throwIfFileNotExists = (files) => {
   if (files.length === 0) {
     throw {
       name: 'fileError',
@@ -28,7 +28,7 @@ const blowIfFileNotExists = (files) => {
   }
 };
 
-const blowIfValueNotValid = (option) => {
+const throwIfValueNotValid = (option) => {
   const flagType = option.flag === '-n' ? 'line' : 'byte';
   if (option.value === '' || option.value === 0) {
     throw {
@@ -37,7 +37,7 @@ const blowIfValueNotValid = (option) => {
     };
   }
 };
-const blowIfIllegalFlag = (flag) => {
+const throwIfIllegalFlag = (flag) => {
   if (/-[^nc]/.test(flag)) {
     throw {
       name: 'wrongOptions',
@@ -74,29 +74,33 @@ const parseValueAndFile = (options, element) => {
   return options;
 };
 
+const throwIfDataInValid = (options) => {
+  throwIfFileNotExists(options.files);
+  throwIfValueNotValid(options.option);
+  throwIfIllegalFlag(options.option.flag);
+};
+
 const parseArgs = (args) => {
   validate(args);
-  const regEx = /-./;
-  if (!regEx.test(args[0])) {
-    return { option: { flag: '-n', value: 10 }, files: args };
-  }
+  // const regEx = /-./;
+  // if (!regEx.test(args[0])) {
+  //   return { option: { flag: '-n', value: 10 }, files: args };
+  // }
 
-  const options = { option: { flag: '-n', value: '' }, files: [] };
+  const options = { option: { flag: '-n', value: 10 }, files: [] };
   for (let index = 0; index < args.length; index++) {
     isFlag(args[index]) ? parseFlagAndValue(options, args[index]) :
       parseValueAndFile(options, args[index]);
   }
-  blowIfFileNotExists(options.files);
-  blowIfValueNotValid(options.option);
-  blowIfIllegalFlag(options.option.flag);
+  throwIfDataInValid(options);
   return options;
 };
 
 exports.parseArgs = parseArgs;
 exports.areOptionsValid = areOptionsValid;
 exports.isFlag = isFlag;
-exports.blowIfFileNotExists = blowIfFileNotExists;
-exports.blowIfValueNotValid = blowIfValueNotValid;
+exports.throwIfFileNotExists = throwIfFileNotExists;
+exports.throwIfValueNotValid = throwIfValueNotValid;
 exports.validate = validate;
 exports.parseFlagAndValue = parseFlagAndValue;
 exports.parseValueAndFile = parseValueAndFile;

@@ -1,6 +1,6 @@
 const { parseArgs, areOptionsValid, isFlag, validate, parseValueAndFile,
   parseFlagAndValue,
-  blowIfFileNotExists, blowIfValueNotValid } = require('../src/parseArgs.js');
+  throwIfFileNotExists, throwIfValueNotValid } = require('../src/parseArgs.js');
 const assert = require('assert');
 
 describe('parseArgs', () => {
@@ -81,27 +81,27 @@ describe('isFlag', () => {
   });
 });
 
-describe('blowIfFileNotExists', () => {
+describe('throwIfFileNotExists', () => {
   it('should not throw error if file name not exists in object', () => {
-    const actual = blowIfFileNotExists(['a.txt']);
+    const actual = throwIfFileNotExists(['a.txt']);
     assert.deepStrictEqual(actual, undefined);
   });
 
   it('should throw error if file name not exists in object', () => {
-    assert.throws(() => blowIfFileNotExists([]), {
+    assert.throws(() => throwIfFileNotExists([]), {
       name: 'fileError',
       message: 'usage: head [-n lines | -c bytes] [file ...]'
     });
   });
 });
 
-describe('blowIfValueNotValid', () => {
+describe('throwIfValueNotValid', () => {
   it('should throw if value is invalid', () => {
-    assert.throws(() => blowIfValueNotValid({ flag: '-n', value: 0 }), {
+    assert.throws(() => throwIfValueNotValid({ flag: '-n', value: 0 }), {
       name: 'valueError',
       message: 'head: illegal line count -- 0'
     });
-    assert.throws(() => blowIfValueNotValid({ flag: '-c', value: 0 }), {
+    assert.throws(() => throwIfValueNotValid({ flag: '-c', value: 0 }), {
       name: 'valueError',
       message: 'head: illegal byte count -- 0'
     });
