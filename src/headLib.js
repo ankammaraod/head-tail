@@ -14,11 +14,12 @@ const head = ({ flag, value }, content) => {
 };
 
 const formatHead = (headContents, files) => {
-  if (headContents.length === 1) {
+  if (headContents.length === 2 && headContents[1] === ''
+    || headContents.length === 1) {
     return headContents;
   }
   return headContents.map((content, index) => {
-    return `==>${files[index]}<==\n${content}`;
+    return content === '' ? '' : `==>${files[index]}<==\n${content}\n`;
   });
 };
 
@@ -29,15 +30,13 @@ const headMain = function (readFile, ...args) {
     try {
       content = readFile(file, 'utf8');
     } catch (error) {
-      throw {
-        name: 'FileReadError',
-        message: `head: ${file}: No such file or directory`
-      };
+      console.error(`head: ${file}: No such file or directory`);
+      return '';
     }
     return head(option, content);
   }
   );
-  return formatHead(headContent, files).join('\n\n');
+  return formatHead(headContent, files).join('\n');
 };
 
 exports.head = head;

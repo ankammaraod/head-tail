@@ -1,5 +1,5 @@
 **TODO**
-- [ ] write tests for headMain in headLib.js if more then one file is given
+- [ ] consider by taking all the files after one file found
 
 **Things to be in consideration in mind**
 - [ ] follow `TODO`.
@@ -10,6 +10,11 @@
 - [ ] remove the messy from parseValueAndFile function
 
 **DONE**
+- [x] write tests for headMain in headLib.js if more then one file is given
+- [x] implement the console.error
+- [x] throw the related errors for certain validations
+- [x] should works for -1 as option
+- [x] consider `node head.js -1 -c1 a.txt` should throw an error
 - [x] consider more then one file or single file.
 - [x] change the contract of parse args and head
 - [x] refactor the parse and validation
