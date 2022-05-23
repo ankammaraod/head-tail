@@ -1,5 +1,9 @@
-const { parseArgs, areOptionsValid, isFlag, validate,
-  throwIfFileNotExists, throwIfValueNotValid } = require('../src/parseArgs.js');
+const { parseArgs, isFlag, splitFlagAndValue,
+  formatArgs } = require('../src/parseArgs.js');
+const { areOptionsValid,
+  throwIfFileNotExists, throwIfValueNotValid, usage } =
+  require('../src/validateArgs.js');
+
 const assert = require('assert');
 
 describe('parseArgs', () => {
@@ -37,7 +41,7 @@ describe('parseArgs', () => {
     assert.throws(() => parseArgs(['-p3', 'a.txt']), {
       name: 'wrongOptions',
       message:
-        'head: illegal option -- p\nusage: head [-n lines | -c bytes] [file ...]'
+        `head: illegal option -- p\n${usage()}`
     });
   });
 
@@ -51,18 +55,20 @@ describe('parseArgs', () => {
 
 describe('areOptionsValid', () => {
   it('should give true if -n is given', () => {
-    assert.deepStrictEqual(areOptionsValid([{ flag: '-n', value: 1 }]), true);
+    assert.deepStrictEqual(areOptionsValid([{ flag: '-n', value: 1 }]),
+      undefined);
   });
 
   it('should give true if -c is given', () => {
-    assert.deepStrictEqual(areOptionsValid([{ flag: '-c', value: 1 }]), true);
+    assert.deepStrictEqual(areOptionsValid([{ flag: '-c', value: 1 }]),
+      undefined);
   });
 
   it('should throw error if other than -n and -c is given', () => {
     assert.throws(() => areOptionsValid([{ flag: '-p', value: 1 }]), {
       name: 'wrongOptions',
       message: 'head: illegal option -- p' +
-        '\nusage: head [-n lines | -c bytes] [file ...]'
+        `\n${usage()}`
     });
   });
 
@@ -88,13 +94,13 @@ describe('isFlag', () => {
 describe('throwIfFileNotExists', () => {
   it('should not throw error if file name not exists in object', () => {
     const actual = throwIfFileNotExists(['a.txt']);
-    assert.deepStrictEqual(actual, undefined);
+    assert.deepStrictEqual(actual, true);
   });
 
   it('should throw error if file name not exists in object', () => {
     assert.throws(() => throwIfFileNotExists([]), {
       name: 'fileError',
-      message: 'usage: head [-n lines | -c bytes] [file ...]'
+      message: usage()
     });
   });
 });
@@ -111,13 +117,27 @@ describe('throwIfValueNotValid', () => {
     });
   });
 });
-
-describe('validate', () => {
-  it('should throw error if arguments are empty', () => {
-    assert.throws(() => validate([]), {
-      name: 'wrongOptions',
-      message: 'usage: head [-n lines | -c bytes] [file ...]'
+describe('splitFlagAndValue', () => {
+  it('should split the flag and value', () => {
+    assert.deepStrictEqual(splitFlagAndValue(['-n1']), ['-n', '1']);
+  });
+  it('should split the flag and value and file', () => {
+    assert.deepStrictEqual(splitFlagAndValue(['-n1', 'file']),
+      ['-n', '1', 'file']);
+  });
+  it('should throw error if args length is zero', () => {
+    assert.throws(() => splitFlagAndValue([]), {
+      name: 'noParameters',
+      message: usage()
     });
   });
+});
 
+describe('formatArgs', () => {
+  it('should format if input is -1', () => {
+    assert.deepStrictEqual(formatArgs(['-1']), ['-n', '1']);
+  });
+  it('should give file name as it is', () => {
+    assert.deepStrictEqual(formatArgs(['a.txt']), ['a.txt']);
+  });
 });

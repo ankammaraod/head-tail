@@ -1,6 +1,5 @@
 **TODO**
-- [ ] consider by taking all the files after one file found
-
+- [ ] test console.error in head main function
 **Things to be in consideration in mind**
 - [ ] follow `TODO`.
 - [ ] Refactor code in every cycle.
@@ -10,6 +9,8 @@
 - [ ] remove the messy from parseValueAndFile function
 
 **DONE**
+- [x] consider by taking all the files after one file found
+- [x] extract validation into separate file
 - [x] write tests for headMain in headLib.js if more then one file is given
 - [x] implement the console.error
 - [x] throw the related errors for certain validations
