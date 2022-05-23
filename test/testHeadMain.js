@@ -21,7 +21,7 @@ describe('HeadMain', () => {
     const mockReadFileSync = shouldReturn(['content.txt', 'content.txt'],
       'hello');
     assert.strictEqual(
-      headMain(mockReadFileSync, '-n', 1, 'content.txt', 'content.txt'),
+      headMain(mockReadFileSync, '-n', '1', 'content.txt', 'content.txt'),
       '==>content.txt<==\nhello\n\n==>content.txt<==\nhello\n');
   });
 

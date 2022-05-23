@@ -1,22 +1,32 @@
-/* eslint-disable max-len */
-const areOptionsValid = (args) => {
-  const isLinesFlagExists = /-n[1-9]*/.test(args) || /-\d+/.test(args);
-  if (/-c[1-9]*/.test(args) && isLinesFlagExists) {
+const areOptionsValid = (options) => {
+  const startsWith = /^-[nc]/;
+  if (!startsWith.test(options[0].flag)) {
     throw {
       name: 'wrongOptions',
-      message: 'head: can\'t combine line and byte counts'
+      message: `head: illegal option -- ${options[0].flag.slice(1)}` +
+        '\nusage: head [-n lines | -c bytes] [file ...]'
     };
+  }
+  const flag = options[0].flag;
+  for (let index = 1; index < options.length; index++) {
+    if (flag !== options[index].flag) {
+      throw {
+        name: 'wrongOptions',
+        message: 'head: can\'t combine line and byte counts'
+      };
+    }
   }
   return true;
 };
-const validate = (args) => {
-  if (args.length === 0) {
+
+const validate = (options) => {
+  if (options.length === 0) {
     throw {
       name: 'wrongOptions',
       message: 'usage: head [-n lines | -c bytes] [file ...]'
     };
   }
-  return areOptionsValid(args);
+  return areOptionsValid(options);
 };
 
 const throwIfFileNotExists = (files) => {
@@ -30,15 +40,16 @@ const throwIfFileNotExists = (files) => {
 
 const throwIfValueNotValid = (option) => {
   const flagType = option.flag === '-n' ? 'line' : 'byte';
-  if (option.value === '' || option.value === 0) {
+  if (option.value === 0 || !isFinite(+option.value)) {
     throw {
       name: 'valueError',
-      message: `head: illegal ${flagType} count -- 0`
+      message: `head: illegal ${flagType} count -- ${option.value}`
     };
   }
 };
+
 const throwIfIllegalFlag = (flag) => {
-  if (/-[^nc]/.test(flag)) {
+  if (!(flag.startsWith('-c') || flag.startsWith('-n'))) {
     throw {
       name: 'wrongOptions',
       message: `head: illegal option -- ${flag.slice(1)}\n` +
@@ -49,51 +60,48 @@ const throwIfIllegalFlag = (flag) => {
 };
 
 const isFlag = (element) => {
-  const regEx = /-./;
-  return regEx.test(element);
+  return element.startsWith('-');
 };
 
-const parseFlagAndValue = (options, element) => {
-  options.option.flag = element;
-  let regEx = /^-.[1-9]/;
-  if (regEx.test(element)) {
-    options.option.value = +element.slice(2);
-    options.option.flag = element.slice(0, 2);
+const throwIfDataInValid = ({ options, files }) => {
+  throwIfFileNotExists(files);
+  validate(options);
+  throwIfValueNotValid(options[options.length - 1]);
+  throwIfIllegalFlag(options[options.length - 1].flag);
+};
+
+const formatArgs = function (arg) {
+  if (arg.startsWith('-') && isFinite(arg)) {
+    return ['-n', '' + Math.abs(arg)];
   }
-  regEx = /^-[1-9]/;
-  if (regEx.test(element)) {
-    options.option.flag = '-n';
-    options.option.value = +element.slice(1);
-  }
-  return options;
+  return arg.startsWith('-') ? [arg.slice(0, 2), arg.slice(2)] : arg;
 };
 
-const parseValueAndFile = (options, element) => {
-  isFinite(+element) ? options.option.value = +element :
-    options.files.push(element);
-  return options;
-};
-
-const throwIfDataInValid = (options) => {
-  throwIfFileNotExists(options.files);
-  throwIfValueNotValid(options.option);
-  throwIfIllegalFlag(options.option.flag);
+const fixArgsFormat = function (args) {
+  const formattedArgs = args.flatMap(formatArgs);
+  return formattedArgs.filter(arg => arg.length > 0);
 };
 
 const parseArgs = (args) => {
-  validate(args);
-  // const regEx = /-./;
-  // if (!regEx.test(args[0])) {
-  //   return { option: { flag: '-n', value: 10 }, files: args };
-  // }
-
-  const options = { option: { flag: '-n', value: 10 }, files: [] };
-  for (let index = 0; index < args.length; index++) {
-    isFlag(args[index]) ? parseFlagAndValue(options, args[index]) :
-      parseValueAndFile(options, args[index]);
+  if (!isFlag(args[0])) {
+    return { option: { flag: '-n', value: 10 }, files: args };
   }
-  throwIfDataInValid(options);
-  return options;
+  const formattedArgs = fixArgsFormat(args);
+  const options = [];
+  let files = [];
+  for (let index = 0; index < formattedArgs.length; index++) {
+    if (isFlag(formattedArgs[index])) {
+      const flag = formattedArgs[index];
+      const value = +formattedArgs[++index];
+      options.push({ flag, value });
+    } else {
+      files = formattedArgs.slice(index);
+      index = formattedArgs.length;
+    }
+  }
+
+  throwIfDataInValid({ options, files });
+  return { option: options[options.length - 1], files };
 };
 
 exports.parseArgs = parseArgs;
@@ -102,5 +110,3 @@ exports.isFlag = isFlag;
 exports.throwIfFileNotExists = throwIfFileNotExists;
 exports.throwIfValueNotValid = throwIfValueNotValid;
 exports.validate = validate;
-exports.parseFlagAndValue = parseFlagAndValue;
-exports.parseValueAndFile = parseValueAndFile;

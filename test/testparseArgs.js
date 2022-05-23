@@ -1,5 +1,4 @@
-const { parseArgs, areOptionsValid, isFlag, validate, parseValueAndFile,
-  parseFlagAndValue,
+const { parseArgs, areOptionsValid, isFlag, validate,
   throwIfFileNotExists, throwIfValueNotValid } = require('../src/parseArgs.js');
 const assert = require('assert');
 
@@ -52,19 +51,24 @@ describe('parseArgs', () => {
 
 describe('areOptionsValid', () => {
   it('should give true if -n is given', () => {
-    assert.deepStrictEqual(areOptionsValid(['-n']), true);
+    assert.deepStrictEqual(areOptionsValid([{ flag: '-n', value: 1 }]), true);
   });
 
   it('should give true if -c is given', () => {
-    assert.deepStrictEqual(areOptionsValid(['-c']), true);
+    assert.deepStrictEqual(areOptionsValid([{ flag: '-c', value: 1 }]), true);
   });
 
-  it('should give true if other than -n and -c is given', () => {
-    assert.deepStrictEqual(areOptionsValid(['-p']), true);
+  it('should throw error if other than -n and -c is given', () => {
+    assert.throws(() => areOptionsValid([{ flag: '-p', value: 1 }]), {
+      name: 'wrongOptions',
+      message: 'head: illegal option -- p' +
+        '\nusage: head [-n lines | -c bytes] [file ...]'
+    });
   });
 
   it('should throw error if -n and -c is given', () => {
-    assert.throws(() => areOptionsValid(['-n', '-c']), {
+    assert.throws(() =>
+      areOptionsValid([{ flag: '-n', value: 1 }, { flag: '-c', value: 1 }]), {
       name: 'wrongOptions',
       message: 'head: can\'t combine line and byte counts'
     });
@@ -116,41 +120,4 @@ describe('validate', () => {
     });
   });
 
-  it('should return true if flag is valid format', () => {
-    assert.deepStrictEqual(validate(['-p']), true);
-  });
-});
-
-describe('parseValueAndFile', () => {
-  it('should parse the value and file', () => {
-    assert.deepStrictEqual(
-      parseValueAndFile({ option: { flag: '-n', value: '' }, files: [] },
-        '10'),
-      { option: { flag: '-n', value: 10 }, files: [] });
-
-    assert.deepStrictEqual(
-      parseValueAndFile({ option: { flag: '-n', value: 10 }, files: [] },
-        'a.txt'),
-      { option: { flag: '-n', value: 10 }, files: ['a.txt'] });
-  });
-});
-describe('parseFlagAndValue', () => {
-  it('should parse the flag and value', () => {
-    assert.deepStrictEqual(
-      parseFlagAndValue({ option: { flag: '', value: '' }, files: [] },
-        '-n10'),
-      { option: { flag: '-n', value: 10 }, files: [] });
-
-    assert.deepStrictEqual(
-      parseFlagAndValue({ option: { flag: '', value: '' }, files: ['a.txt'] },
-        '-c10'),
-      { option: { flag: '-c', value: 10 }, files: ['a.txt'] });
-  });
-  it('should parse content to -n and value for -value', () => {
-    assert.deepStrictEqual(
-      parseFlagAndValue(
-        { option: { flag: '', value: '' }, files: [] }, '-10'),
-      { option: { flag: '-n', value: 10 }, files: [] }
-    );
-  });
 });
