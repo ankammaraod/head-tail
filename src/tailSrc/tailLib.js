@@ -1,21 +1,40 @@
+const { print } = require('../headSrc/print.js');
+const { parseArgs } = require('./parseArgs.js');
+
 const lines = (content, value) => {
-  return content.split('\n').slice(-value).join('\n');
+  if (value !== 0) {
+    return content.split('\n').slice(value).join('\n');
+  }
 };
 
 const char = (content, value) => {
-  return content.split('').slice(-value).join('');
+  if (value !== 0) {
+    return content.split('').slice(value).join('');
+  }
 };
 
-const tail = (funRef, content, value) => {
-  return funRef(content, value);
+const tailMain = (readFile, log, error, ...args) => {
+  const { option, files } = parseArgs(args);
+  const funRef = option.flag === '-c' ? char : lines;
+  const tailContent = files.map((file) => {
+    let content;
+    try {
+      content = readFile(file, 'utf8');
+    } catch (error) {
+      return {
+        file: file,
+        hasRead: false,
+        message: `tail: ${file}: No such file or directory`
+      };
+    }
+    return {
+      file, content: funRef(content, option.value), hasRead: true
+    };
+  }
+  );
+  print(log, error, tailContent);
 };
 
-const tailMain = ({ flag, value }, content) => {
-  const funRef = flag === '-c' ? char : lines;
-  tail(funRef, content, value);
-};
-
-exports.tail = tail;
 exports.tailMain = tailMain;
 exports.char = char;
 exports.lines = lines;

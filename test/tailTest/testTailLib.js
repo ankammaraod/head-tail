@@ -1,13 +1,52 @@
 const assert = require('assert');
-const { tail, char, lines } = require('../../src/tailSrc/tailLib.js');
-describe.only('tail', () => {
-  it('should give the last characters ', () => {
-    assert.deepStrictEqual(tail(char, 'hello', 1), 'o');
-    assert.deepStrictEqual(tail(char, 'hello', 2), 'lo');
+const { char, lines, tailMain } = require('../../src/tailSrc/tailLib.js');
+const { shouldReturn } = require('../headTest/testHeadMain.js');
+const { mockConsoleError, mockConsoleLog } =
+  require('../headTest/testPrint.js');
+
+describe('char', () => {
+  it('should give the last single character ', () => {
+    assert.deepStrictEqual(char('hello', -1), 'o');
   });
-  it('should give the last lines ', () => {
-    assert.deepStrictEqual(tail(lines, 'hello\nhai', 1), 'hai');
-    assert.deepStrictEqual(tail(lines, 'hello\nhai', 2), 'hello\nhai');
+  it('should give the last two characters', () => {
+    assert.deepStrictEqual(char('hello', -2), 'lo');
   });
 });
 
+describe('lines', () => {
+  it('should give the last single character ', () => {
+    assert.deepStrictEqual(lines('hello\nhai', -1), 'hai');
+  });
+  it('should give the last two characters', () => {
+    assert.deepStrictEqual(lines('hello\nhai', -2), 'hello\nhai');
+  });
+});
+
+//
+describe('tailMain', () => {
+  it('should give the lines up to 10 by default from single file', () => {
+
+    const mockReadFileSync = shouldReturn(['a.txt'], 'hello');
+    const ActualContent = ['hello'];
+    const expContent = [];
+    const mockedConsoleLog = mockConsoleLog(expContent, ActualContent);
+    const mockedConsoleError = mockConsoleError([], []);
+
+    tailMain(
+      mockReadFileSync, mockedConsoleLog, mockedConsoleError, 'a.txt');
+    assert.deepStrictEqual(ActualContent, expContent);
+  });
+
+  it('should give the single character from single file', () => {
+    const mockReadFileSync = shouldReturn(['a.txt'], 'hello');
+    const ActualContent = ['o'];
+    const expContent = [];
+    const mockedConsoleLog = mockConsoleLog(expContent, ActualContent);
+    const mockedConsoleError = mockConsoleError([], []);
+
+    tailMain(
+      mockReadFileSync, mockedConsoleLog, mockedConsoleError, '-c1', 'a.txt');
+    assert.deepStrictEqual(ActualContent, expContent);
+  });
+
+});

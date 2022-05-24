@@ -65,3 +65,6 @@ describe('print', () => {
   });
 
 });
+
+exports.mockConsoleError = mockConsoleError;
+exports.mockConsoleLog = mockConsoleLog;

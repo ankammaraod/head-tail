@@ -1,4 +1,5 @@
 const { headMain } = require('../../src/headSrc/headLib.js');
+const { mockConsoleLog, mockConsoleError } = require('../headTest/testPrint.js')
 const assert = require('assert');
 
 const shouldReturn = (mockFile, content) => {
@@ -8,25 +9,6 @@ const shouldReturn = (mockFile, content) => {
     assert.equal(encoding, 'utf8');
     index++;
     return content;
-  };
-};
-
-const mockConsoleLog = (logExp, logActual) => {
-  let index = 0;
-  return function (content) {
-    assert.ok(index < logActual.length);
-    assert.deepStrictEqual(content, logActual[index]);
-    logExp.push(logActual[index]);
-    index++;
-  };
-};
-const mockConsoleError = (errorExp, errorActual) => {
-  let index = 0;
-  return function (content) {
-    assert.ok(index < errorActual.length);
-    assert.deepStrictEqual(content, errorActual[index]);
-    errorExp.push(errorActual[index]);
-    index++;
   };
 };
 
@@ -57,3 +39,5 @@ describe('HeadMain', () => {
   });
 
 });
+
+exports.shouldReturn = shouldReturn;

@@ -1,7 +1,7 @@
 const { parseArgs, isFlag, splitFlagAndValue,
   formatArgs } = require('../../src/headSrc/parseArgs.js');
-const { areOptionsValid,
-  throwIfFileNotExists, throwIfValueNotValid, usage } =
+const { validateOptions, error,
+  validateFileNotExist, validateInValidValue, usage } =
   require('../../src/headSrc/validateArgs.js');
 
 const assert = require('assert');
@@ -39,7 +39,7 @@ describe('parseArgs', () => {
 
   it('should throw if the flag other than -n and -c ', () => {
     assert.throws(() => parseArgs(['-p3', 'a.txt']), {
-      name: 'wrongOptions',
+      name: 'illegalOption',
       message:
         `head: illegal option -- p\n${usage()}`
     });
@@ -47,26 +47,17 @@ describe('parseArgs', () => {
 
   it('should throw object if two different options provide', () => {
     assert.throws(() => parseArgs(['-c', '3', '-n', '5', 'a.txt']), {
-      name: 'wrongOptions',
+      name: 'illegalCombination',
       message: 'head: can\'t combine line and byte counts'
     });
   });
 });
 
-describe('areOptionsValid', () => {
-  it('should give true if -n is given', () => {
-    assert.deepStrictEqual(areOptionsValid([{ flag: '-n', value: 1 }]),
-      undefined);
-  });
-
-  it('should give true if -c is given', () => {
-    assert.deepStrictEqual(areOptionsValid([{ flag: '-c', value: 1 }]),
-      undefined);
-  });
+describe('validateOptions', () => {
 
   it('should throw error if other than -n and -c is given', () => {
-    assert.throws(() => areOptionsValid([{ flag: '-p', value: 1 }]), {
-      name: 'wrongOptions',
+    assert.throws(() => validateOptions([{ flag: '-p', value: 1 }]), {
+      name: 'illegalOption',
       message: 'head: illegal option -- p' +
         `\n${usage()}`
     });
@@ -74,8 +65,8 @@ describe('areOptionsValid', () => {
 
   it('should throw error if -n and -c is given', () => {
     assert.throws(() =>
-      areOptionsValid([{ flag: '-n', value: 1 }, { flag: '-c', value: 1 }]), {
-      name: 'wrongOptions',
+      validateOptions([{ flag: '-n', value: 1 }, { flag: '-c', value: 1 }]), {
+      name: 'illegalCombination',
       message: 'head: can\'t combine line and byte counts'
     });
   });
@@ -92,26 +83,21 @@ describe('isFlag', () => {
 });
 
 describe('throwIfFileNotExists', () => {
-  it('should not throw error if file name not exists in object', () => {
-    const actual = throwIfFileNotExists(['a.txt']);
-    assert.deepStrictEqual(actual, true);
-  });
-
   it('should throw error if file name not exists in object', () => {
-    assert.throws(() => throwIfFileNotExists([]), {
+    assert.throws(() => validateFileNotExist([]), {
       name: 'fileError',
       message: usage()
     });
   });
 });
 
-describe('throwIfValueNotValid', () => {
+describe('validateInValidValue', () => {
   it('should throw if value is invalid', () => {
-    assert.throws(() => throwIfValueNotValid({ flag: '-n', value: 0 }), {
+    assert.throws(() => validateInValidValue({ flag: '-n', value: 0 }), {
       name: 'valueError',
       message: 'head: illegal line count -- 0'
     });
-    assert.throws(() => throwIfValueNotValid({ flag: '-c', value: 0 }), {
+    assert.throws(() => validateInValidValue({ flag: '-c', value: 0 }), {
       name: 'valueError',
       message: 'head: illegal byte count -- 0'
     });
@@ -139,5 +125,12 @@ describe('formatArgs', () => {
   });
   it('should give file name as it is', () => {
     assert.deepStrictEqual(formatArgs(['a.txt']), ['a.txt']);
+  });
+});
+
+describe('error', () => {
+  it('should give given elements in structured way', () => {
+    assert.deepStrictEqual(error('hai', 'hello'),
+      { name: 'hai', message: 'hello' });
   });
 });

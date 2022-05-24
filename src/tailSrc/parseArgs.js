@@ -2,10 +2,11 @@ const { validate, usage } =
   require('./validateArgs.js');
 
 const isFlag = (element) => {
-  return /-./.test(element);
+  return /-[^\d]/.test(element);
 };
 
 const formatArgs = function (arg) {
+
   if (isFlag(arg) && isFinite(arg)) {
     return ['-n', '' + Math.abs(arg)];
   }
@@ -24,19 +25,18 @@ const splitFlagAndValue = function (args) {
 };
 
 const parseArgs = (args) => {
-
   const formattedArgs = splitFlagAndValue(args);
   const options = [];
   let files = [];
   let index = 0;
   while (isFlag(formattedArgs[index])) {
     const flag = formattedArgs[index];
-    const value = formattedArgs[index + 1];
+    const value = +formattedArgs[index + 1] * -1;
     index = index + 2;
     options.push({ flag, value });
   }
   if (options.length === 0) {
-    options.push({ flag: '-n', value: 10 });
+    options.push({ flag: '-n', value: -10 });
   }
   files = formattedArgs.slice(index);
 

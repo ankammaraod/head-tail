@@ -1,13 +1,16 @@
 # Tail
-- [ ] implement tail main
-- [ ] check the parser 
-- [ ] modify the validaters for tail
-- [ ] take the arguments from command prompt
-- [ ] use the print function from head
-- [ ]
+- [ ] cover the tail -2 file.txt case
+- [ ] cover the tail +2 file.txt case
+- [ ] check if new contract can be handled using existing parser
 **MAYBE**
+- [ ] consider generic parser
 
 **Done**
+- [x] implement tail main
+- [x] check the parser 
+- [x] modify the validaters for tail
+- [x] take the arguments from command prompt
+- [x] use the print function from head
 - [x] make tail works for explicitly for single line 
       if given data contains more than 1 line
 - [x] write test for more than one line.
