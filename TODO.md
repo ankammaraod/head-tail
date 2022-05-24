@@ -1,7 +1,17 @@
 # Tail
-- [ ] experiment tail in shell
-- [ ] change the directory structure
-- [ ] make sure every test is passing
+- [ ] create file of testTailLib.js in test/tailTest/
+- [ ] write expectation
+**MAYBE**
+
+**Done**
+- [x] take the contract from tail command from shell
+- [x] experiment tail in shell
+- [x] change the directory structure
+- [x] make sure every test is passing
+
+
+
+
 ----------------------
 # Head
 **TODO**
@@ -14,7 +24,6 @@
 - [ ] Refactor code in every cycle.
 - [ ] work on hard code data .
 
-**MAYBE**
 
 **DONE**
 - [x] test console.error in head main function

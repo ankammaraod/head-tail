@@ -1,4 +1,4 @@
-const { headMain } = require('./src/headLib.js');
+const { headMain } = require('./src/headSrc/headLib');
 const { log, error } = console;
 const fs = require('fs');
 
