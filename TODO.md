@@ -1,9 +1,13 @@
 # Tail
-- [ ] create file of testTailLib.js in test/tailTest/
-- [ ] write expectation
+- [ ] make tail works for explicitly for single line 
+      if given data contains more than 1 line
+- [ ] write test for more than one line.
 **MAYBE**
 
 **Done**
+- [x] extract tail function from test in to src/tailSrc
+- [x] create file of testTailLib.js in test/tailTest/
+- [x] write expectation
 - [x] take the contract from tail command from shell
 - [x] experiment tail in shell
 - [x] change the directory structure
