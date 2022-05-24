@@ -1,10 +1,16 @@
 # Tail
-- [ ] make tail works for explicitly for single line 
-      if given data contains more than 1 line
-- [ ] write test for more than one line.
+- [ ] implement tail main
+- [ ] check the parser 
+- [ ] modify the validaters for tail
+- [ ] take the arguments from command prompt
+- [ ] use the print function from head
+- [ ]
 **MAYBE**
 
 **Done**
+- [x] make tail works for explicitly for single line 
+      if given data contains more than 1 line
+- [x] write test for more than one line.
 - [x] extract tail function from test in to src/tailSrc
 - [x] create file of testTailLib.js in test/tailTest/
 - [x] write expectation

@@ -14,7 +14,7 @@ const head = ({ flag, value }, content) => {
   return extract(content, separators, value);
 };
 
-const headMain = function (readFile, log, error, ...args) {
+const headMain = (readFile, log, error, ...args) => {
   const { option, files } = parseArgs(args);
   const headContent = files.map((file) => {
     let content;
