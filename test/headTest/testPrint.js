@@ -1,4 +1,4 @@
-const { print } = require('../src/print.js');
+const { print } = require('../../src/headSrc/print.js');
 const assert = require('assert');
 
 const mockConsoleLog = (logExp, logActual) => {

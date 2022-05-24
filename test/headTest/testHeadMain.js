@@ -1,4 +1,4 @@
-const { headMain } = require('../src/headLib.js');
+const { headMain } = require('../../src/headSrc/headLib.js');
 const assert = require('assert');
 
 const shouldReturn = (mockFile, content) => {

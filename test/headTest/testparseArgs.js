@@ -1,8 +1,8 @@
 const { parseArgs, isFlag, splitFlagAndValue,
-  formatArgs } = require('../src/parseArgs.js');
+  formatArgs } = require('../../src/headSrc/parseArgs.js');
 const { areOptionsValid,
   throwIfFileNotExists, throwIfValueNotValid, usage } =
-  require('../src/validateArgs.js');
+  require('../../src/headSrc/validateArgs.js');
 
 const assert = require('assert');
 

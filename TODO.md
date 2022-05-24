@@ -1,4 +1,14 @@
+# Tail
+- [ ] experiment tail in shell
+- [ ] change the directory structure
+- [ ] make sure every test is passing
+----------------------
+# Head
 **TODO**
+- [ ] check for --help is not working properly
+- [ ] refactor parseArgs
+- [ ] duplicate mock functions
+- [ ] seperate mock functions into seperate file
 **Things to be in consideration in mind**
 - [ ] follow `TODO`.
 - [ ] Refactor code in every cycle.

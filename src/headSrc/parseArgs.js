@@ -25,6 +25,7 @@ const splitFlagAndValue = function (args) {
 };
 
 const parseArgs = (args) => {
+
   const formattedArgs = splitFlagAndValue(args);
   const options = [];
   let files = [];

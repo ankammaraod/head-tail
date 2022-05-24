@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { head, getSeparator, extract } = require('../src/headLib.js');
+const { head, getSeparator, extract } = require('../../src/headSrc/headLib.js');
 
 describe('head', () => {
   it('should give single line from contents', () => {
