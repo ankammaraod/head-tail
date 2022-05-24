@@ -9,7 +9,6 @@ const print = (log, error, headContents) => {
   }
 
   headContents.forEach((record) => {
-    console.log(record);
     if (record.hasRead) {
       log(header(record));
     } else {

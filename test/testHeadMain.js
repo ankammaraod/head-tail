@@ -30,7 +30,7 @@ const mockConsoleError = (errorExp, errorActual) => {
   };
 };
 
-describe.only('HeadMain', () => {
+describe('HeadMain', () => {
   it('should give the lines up to 10 by default from single file', () => {
 
     const mockReadFileSync = shouldReturn(['a.txt'], 'hello');
