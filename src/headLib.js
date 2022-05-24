@@ -1,5 +1,6 @@
 const { splitLines, joinLines } = require('./stringUtils.js');
 const { parseArgs } = require('./parseArgs.js');
+const { print } = require('./print.js');
 
 const extract = (contents, separators, count) => {
   const lines = splitLines(contents, separators);
@@ -13,35 +14,25 @@ const head = ({ flag, value }, content) => {
   return extract(content, separators, value);
 };
 
-const formatHead = (headContents, files) => {
-  if (files.length === 1) {
-    return headContents;
-  }
-  return headContents.map((content, index) => {
-    return content === '' ? '' : `==>${files[index]}<==\n${content}\n`;
-  });
-};
-
-const headMain = function (readFile, ...args) {
+const headMain = function (readFile, log, error, ...args) {
   const { option, files } = parseArgs(args);
-  let content;
   const headContent = files.map((file) => {
-
+    let content;
     try {
       content = readFile(file, 'utf8');
-
     } catch (error) {
-      console.error(`head: ${file}: No such file or directory`);
-      return '';
+      return {
+        file: file,
+        hasRead: false,
+        message: `head: ${file}: No such file or directory`
+      };
     }
-    return head(option, content);
-
+    return { file, content: head(option, content), hasRead: true };
   }
   );
-  return formatHead(headContent, files).join('\n');
+  print(log, error, headContent);
 };
 exports.head = head;
 exports.extract = extract;
 exports.getSeparator = getSeparator;
 exports.headMain = headMain;
-exports.formatHead = formatHead;

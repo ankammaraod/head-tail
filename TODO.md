@@ -1,14 +1,17 @@
 **TODO**
-- [ ] test console.error in head main function
 **Things to be in consideration in mind**
 - [ ] follow `TODO`.
 - [ ] Refactor code in every cycle.
 - [ ] work on hard code data .
 
 **MAYBE**
-- [ ] remove the messy from parseValueAndFile function
 
 **DONE**
+- [x] test console.error in head main function
+- [x] write seperate function for error and log
+- [x] extract into print function seperate file
+- [x] add tests for headMain
+- [x] remove the messy from parseValueAndFile function
 - [x] consider by taking all the files after one file found
 - [x] extract validation into separate file
 - [x] write tests for headMain in headLib.js if more then one file is given

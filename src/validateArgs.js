@@ -1,8 +1,7 @@
 const usage = () => 'usage: head [-n lines | -c bytes] [file ...]';
 
 const areOptionsValid = (options) => {
-  const startsWith = /^-[nc]/;
-  if (!startsWith.test(options[0].flag)) {
+  if (!['-n', '-c'].includes(options[0].flag)) {
     throw {
       name: 'wrongOptions',
       message: `head: illegal option -- ${options[0].flag.slice(1)}` +

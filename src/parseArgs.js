@@ -2,7 +2,8 @@ const { validate, usage } =
   require('./validateArgs.js');
 
 const isFlag = (element) => {
-  return ('' + element).startsWith('-');
+  // return ('' + element).startsWith('-');
+  return /-./.test(element);
 };
 
 const formatArgs = function (arg) {

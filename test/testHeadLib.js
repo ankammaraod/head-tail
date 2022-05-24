@@ -1,6 +1,5 @@
 const assert = require('assert');
-const { head, getSeparator, extract, formatHead } =
-  require('../src/headLib.js');
+const { head, getSeparator, extract } = require('../src/headLib.js');
 
 describe('head', () => {
   it('should give single line from contents', () => {
@@ -42,17 +41,5 @@ describe('extract', () => {
 
   it('should give more than single line', () => {
     assert.deepStrictEqual(extract('hello\nbye', '\n', 2), 'hello\nbye');
-  });
-});
-
-describe('formatHead', () => {
-  it('should format the content if two files are given', () => {
-    assert.deepStrictEqual(
-      formatHead(['hai', 'bye'], ['a.txt', 'b.txt']),
-      ['==>a.txt<==\nhai\n', '==>b.txt<==\nbye\n']
-    );
-  });
-  it('should not format the content of single file', () => {
-    assert.deepStrictEqual(formatHead(['hai'], ['a.txt']), ['hai']);
   });
 });
