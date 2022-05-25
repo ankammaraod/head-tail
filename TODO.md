@@ -1,11 +1,15 @@
 # Tail
-- [ ] cover the tail -2 file.txt case
-- [ ] cover the tail +2 file.txt case
-- [ ] check if new contract can be handled using existing parser
+- [ ] implement for +0 case
+- [ ] remove the repeated code in parser
 **MAYBE**
 - [ ] consider generic parser
 
 **Done**
+- [x] implement -r option
+- [x] implement -q option
+- [x] cover the tail -2 file.txt case
+- [x] cover the tail +2 file.txt case
+- [x] check if new contract can be handled using existing parser
 - [x] implement tail main
 - [x] check the parser 
 - [x] modify the validaters for tail

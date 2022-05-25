@@ -1,5 +1,6 @@
 const assert = require('assert');
-const { char, lines, tailMain } = require('../../src/tailSrc/tailLib.js');
+const { char, lines, tailMain, separateFlags }
+  = require('../../src/tailSrc/tailLib.js');
 const { shouldReturn } = require('../headTest/testHeadMain.js');
 const { mockConsoleError, mockConsoleLog } =
   require('../headTest/testPrint.js');
@@ -49,4 +50,13 @@ describe('tailMain', () => {
     assert.deepStrictEqual(ActualContent, expContent);
   });
 
+});
+
+describe('separateFlags', () => {
+  it('should seperate self flags and rest of flag', () => {
+    assert.deepStrictEqual(separateFlags(['-n', '-q']), [['-q'], ['-n']]);
+    assert.deepStrictEqual(separateFlags(['-q', '-c']), [['-q'], ['-c']]);
+    assert.deepStrictEqual(separateFlags(['-q', '-r', '-n', '-c']),
+      [['-q', '-r'], ['-n', '-c']]);
+  });
 });

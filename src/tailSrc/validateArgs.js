@@ -46,6 +46,9 @@ const validateInValidValue = (option) => {
   if (!isFinite(+option.value)) {
     throw valueError(option.value);
   }
+  if (option.value === '-0') {
+    process.exit(0);
+  }
 };
 
 const validate = ({ options, files }) => {

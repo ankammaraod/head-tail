@@ -93,11 +93,11 @@ describe('throwIfFileNotExists', () => {
 
 describe('validateInValidValue', () => {
   it('should throw if value is invalid', () => {
-    assert.throws(() => validateInValidValue({ flag: '-n', value: 0 }), {
+    assert.throws(() => validateInValidValue({ flag: '-n', value: '0' }), {
       name: 'valueError',
       message: 'head: illegal line count -- 0'
     });
-    assert.throws(() => validateInValidValue({ flag: '-c', value: 0 }), {
+    assert.throws(() => validateInValidValue({ flag: '-c', value: '0' }), {
       name: 'valueError',
       message: 'head: illegal byte count -- 0'
     });

@@ -39,7 +39,6 @@ const parseArgs = (args) => {
     options.push({ flag: '-n', value: 10 });
   }
   files = formattedArgs.slice(index);
-
   validate({ options, files });
   options[options.length - 1].value = +options[options.length - 1].value;
   return { option: options[options.length - 1], files };

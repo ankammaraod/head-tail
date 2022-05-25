@@ -44,7 +44,7 @@ const validateFileNotExist = (files) => {
 
 const validateInValidValue = (option) => {
   const flagType = option.flag === '-n' ? 'line' : 'byte';
-  if (option.value === 0 || !isFinite(+option.value)) {
+  if (option.value === '0' || !isFinite(+option.value)) {
     throw valueError(flagType, option.value);
   }
 };
