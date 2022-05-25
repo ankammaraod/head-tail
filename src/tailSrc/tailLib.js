@@ -3,7 +3,8 @@ const { parseArgs } = require('./parseArgs.js');
 
 const lines = (content, value, isReverse) => {
   let record;
-  if (value !== -0) {
+  const zeroWithMinus = -0;
+  if (value !== zeroWithMinus) {
     record = content.split('\n').slice(value);
   }
   if (isReverse) {

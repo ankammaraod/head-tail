@@ -5,14 +5,14 @@ const isFlag = (element) => {
   return /-./.test(element);
 };
 
-const formatArgs = function (arg) {
+const formatArgs = (arg) => {
   if (isFlag(arg) && isFinite(arg)) {
     return ['-n', '' + Math.abs(arg)];
   }
   return isFlag(arg) ? [arg.slice(0, 2), arg.slice(2)] : arg;
 };
 
-const splitFlagAndValue = function (args) {
+const splitFlagAndValue = (args) => {
   if (args.length === 0) {
     throw {
       name: 'noParameters',
