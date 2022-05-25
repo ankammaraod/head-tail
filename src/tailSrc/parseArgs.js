@@ -47,7 +47,8 @@ const parseArgs = (args) => {
   while (isFlag(formattedArgs[index]) || isNumOpt(formattedArgs[index])) {
     if (!isFlag(formattedArgs[index]) && isNumOpt(formattedArgs[index])) {
       flag = '-n';
-      value = +formattedArgs[index];
+      const number = formattedArgs[index];
+      value = ['-0', '+0'].includes(number) ? number : +number - 1;
       index = index + 1;
     } else {
       flag = formattedArgs[index];

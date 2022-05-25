@@ -1,10 +1,10 @@
 # Tail
-- [ ] implement for +0 case
 - [ ] remove the repeated code in parser
 **MAYBE**
 - [ ] consider generic parser
 
 **Done**
+- [x] implement for +0 case
 - [x] implement -r option
 - [x] implement -q option
 - [x] cover the tail -2 file.txt case
