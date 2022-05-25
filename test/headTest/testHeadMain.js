@@ -1,5 +1,6 @@
 const { headMain } = require('../../src/headSrc/headLib.js');
-const { mockConsoleLog, mockConsoleError } = require('../headTest/testPrint.js')
+const { mockConsoleLog, mockConsoleError } =
+  require('../headTest/testPrint.js');
 const assert = require('assert');
 
 const shouldReturn = (mockFile, content) => {

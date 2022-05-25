@@ -1,4 +1,5 @@
 # Tail
+- [ ] refactor code
 - [ ] remove the repeated code in parser
 **MAYBE**
 - [ ] consider generic parser
@@ -25,9 +26,6 @@
 - [x] experiment tail in shell
 - [x] change the directory structure
 - [x] make sure every test is passing
-
-
-
 
 ----------------------
 # Head
