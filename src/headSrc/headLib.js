@@ -32,6 +32,7 @@ const headMain = (readFile, log, error, ...args) => {
   );
   print(log, error, headContent);
 };
+
 exports.head = head;
 exports.extract = extract;
 exports.getSeparator = getSeparator;

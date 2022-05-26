@@ -61,7 +61,7 @@
     "no-eval": "error",
     "no-implicit-globals": "error",
     "prefer-const": "error",
-    // "no-magic-numbers": "error",
+    "no-magic-numbers": "warn",
     "no-process-exit": "error",
     "no-process-env": "error",
     "no-return-assign": "error",
@@ -107,7 +107,8 @@
     },
     {
       "files": [
-        "head.js"
+        "head.js",
+        "tail.js"
       ],
       "rules": {
         "no-console": "off"

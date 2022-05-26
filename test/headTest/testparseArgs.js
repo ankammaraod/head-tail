@@ -1,5 +1,5 @@
 const { parseArgs, isFlag, splitFlagAndValue,
-  formatArgs } = require('../../src/headSrc/parseArgs.js');
+  splitArgs } = require('../../src/headSrc/parseArgs.js');
 const { validateOptions, error,
   validateFileNotExist, validateInValidValue, usage } =
   require('../../src/headSrc/validateArgs.js');
@@ -54,7 +54,6 @@ describe('parseArgs', () => {
 });
 
 describe('validateOptions', () => {
-
   it('should throw error if other than -n and -c is given', () => {
     assert.throws(() => validateOptions([{ flag: '-p', value: 1 }]), {
       name: 'illegalOption',
@@ -97,20 +96,24 @@ describe('validateInValidValue', () => {
       name: 'valueError',
       message: 'head: illegal line count -- 0'
     });
+
     assert.throws(() => validateInValidValue({ flag: '-c', value: '0' }), {
       name: 'valueError',
       message: 'head: illegal byte count -- 0'
     });
   });
 });
+
 describe('splitFlagAndValue', () => {
   it('should split the flag and value', () => {
     assert.deepStrictEqual(splitFlagAndValue(['-n1']), ['-n', '1']);
   });
+
   it('should split the flag and value and file', () => {
     assert.deepStrictEqual(splitFlagAndValue(['-n1', 'file']),
       ['-n', '1', 'file']);
   });
+
   it('should throw error if args length is zero', () => {
     assert.throws(() => splitFlagAndValue([]), {
       name: 'noParameters',
@@ -119,12 +122,13 @@ describe('splitFlagAndValue', () => {
   });
 });
 
-describe('formatArgs', () => {
+describe('splitArgs', () => {
   it('should format if input is -1', () => {
-    assert.deepStrictEqual(formatArgs(['-1']), ['-n', '1']);
+    assert.deepStrictEqual(splitArgs(['-1']), ['-n', '1']);
   });
+
   it('should give file name as it is', () => {
-    assert.deepStrictEqual(formatArgs(['a.txt']), ['a.txt']);
+    assert.deepStrictEqual(splitArgs(['a.txt']), ['a.txt']);
   });
 });
 

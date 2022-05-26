@@ -5,7 +5,7 @@ const isFlag = (element) => {
   return /-./.test(element);
 };
 
-const formatArgs = (arg) => {
+const splitArgs = (arg) => {
   if (isFlag(arg) && isFinite(arg)) {
     return ['-n', '' + Math.abs(arg)];
   }
@@ -19,31 +19,30 @@ const splitFlagAndValue = (args) => {
       message: usage()
     };
   }
-  const formattedArgs = args.flatMap(formatArgs);
+  const formattedArgs = args.flatMap(splitArgs);
   return formattedArgs.filter(arg => arg.length > 0);
 };
 
 const parseArgs = (args) => {
-
-  const formattedArgs = splitFlagAndValue(args);
+  const splittedArgs = splitFlagAndValue(args);
   const options = [];
   let files = [];
   let index = 0;
-  while (isFlag(formattedArgs[index])) {
-    const flag = formattedArgs[index];
-    const value = formattedArgs[index + 1];
+  while (isFlag(splittedArgs[index])) {
+    const flag = splittedArgs[index];
+    const value = +splittedArgs[index + 1];
     index = index + 2;
     options.push({ flag, value });
   }
   if (options.length === 0) {
     options.push({ flag: '-n', value: 10 });
   }
-  files = formattedArgs.slice(index);
+  files = splittedArgs.slice(index);
   validate({ options, files });
-  options[options.length - 1].value = +options[options.length - 1].value;
   return { option: options[options.length - 1], files };
 };
+
 exports.parseArgs = parseArgs;
 exports.isFlag = isFlag;
 exports.splitFlagAndValue = splitFlagAndValue;
-exports.formatArgs = formatArgs;
+exports.splitArgs = splitArgs;
