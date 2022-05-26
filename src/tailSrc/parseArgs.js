@@ -1,5 +1,5 @@
 /* eslint-disable complexity */
-const { validate, usage } =
+const { validate, noParameters } =
   require('./validateArgs.js');
 
 const isFlag = (element) => {
@@ -15,44 +15,54 @@ const formatArgs = (arg) => {
 
 const splitFlagAndValue = (args) => {
   if (args.length === 0) {
-    throw {
-      name: 'noParameters',
-      message: usage()
-    };
+    throw noParameters();
   }
   const formattedArgs = args.flatMap(formatArgs);
   return formattedArgs.filter(arg => arg.length > 0);
 };
 
 const parseValue = (value) => {
-  if (/\+[0-9]/.test(value)) {
+  const numberStartsWithPlus = /\+[0-9]/;
+  if (numberStartsWithPlus.test(value)) {
     if (value === '+0') {
       return value;
     }
     return +value - 1;
   }
-  if (/-[0-9]/.test(value)) {
+  const numberStartsWithMinus = /-[0-9]/;
+  if (numberStartsWithMinus.test(value)) {
     return +value;
   }
   return -+value;
 };
-const isNumOpt = (element) => /^[+-]/.test(element);
+
+const isNumOpt = (element) => {
+  const numberAsOption = /^[+-]/;
+  numberAsOption.test(element);
+};
 
 const parseArgs = (args) => {
-  const formattedArgs = splitFlagAndValue(args);
+  const splittedArgs = splitFlagAndValue(args);
   const options = [];
   let files = [];
   let index = 0;
   let flag; let value;
-  while (isFlag(formattedArgs[index]) || isNumOpt(formattedArgs[index])) {
-    if (!isFlag(formattedArgs[index]) && isNumOpt(formattedArgs[index])) {
+
+  const isFlagOrIsNumOpt = (element) => isFlag(element) ||
+    isNumOpt(element);
+
+  const isNotFlagAndIsNumOpt = (element) => !isFlag(element) &&
+    isNumOpt(element);
+
+  while (isFlagOrIsNumOpt(splittedArgs[index])) {
+    if (isNotFlagAndIsNumOpt(splittedArgs[index])) {
       flag = '-n';
-      const number = formattedArgs[index];
+      const number = splittedArgs[index];
       value = ['-0', '+0'].includes(number) ? number : +number - 1;
       index = index + 1;
     } else {
-      flag = formattedArgs[index];
-      value = parseValue(formattedArgs[index + 1]);
+      flag = splittedArgs[index];
+      value = parseValue(splittedArgs[index + 1]);
       index = index + 2;
     }
     options.push({ flag, value });
@@ -60,7 +70,7 @@ const parseArgs = (args) => {
   if (options.length === 0) {
     options.push({ flag: '-n', value: -10 });
   }
-  files = formattedArgs.slice(index);
+  files = splittedArgs.slice(index);
 
   validate({ options, files });
   return { option: options[options.length - 1], files };

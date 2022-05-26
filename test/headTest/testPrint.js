@@ -21,7 +21,7 @@ const mockConsoleError = (errorExp, errorActual) => {
 };
 
 describe('print', () => {
-  it('shoud print with out format for single headed content', () => {
+  it('should print with out format for single headed content', () => {
     const logActual = ['hello'];
     const logExp = [];
     const mockedLog = mockConsoleLog(logExp, logActual);
