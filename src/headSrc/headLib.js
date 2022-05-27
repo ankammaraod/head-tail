@@ -20,9 +20,11 @@ const headOfFile = (file, sliceStrategy, value, readFile) => {
   try {
     content = readFile(file, 'utf8');
   } catch (error) {
+    process.exitCode = 1;
     return {
       file,
       hasRead: false,
+
       message: `head: ${file}: No such file or directory`
     };
   }
