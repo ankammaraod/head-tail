@@ -4,7 +4,7 @@ const fs = require('fs');
 const main = () => {
   process.exitCode = 0;
   try {
-    headMain(
+    process.exitCode = headMain(
       fs.readFileSync,
       console.log,
       console.error,

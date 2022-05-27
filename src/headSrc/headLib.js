@@ -34,13 +34,22 @@ const headOfFile = (file, sliceStrategy, value, readFile) => {
   const result = sliceStrategy(content, value);
   return { file, content: result, hasRead: true };
 };
-//
+
+const getExitCode = (headContents) => {
+  return headContents.every((headContent) => {
+    return headContent.hasRead ? 0 : 1;
+  }
+  );
+};
+
 const headMain = (readFile, log, error, ...args) => {
   const { option, files } = parseArgs(args);
   const sliceStrategy = sliceBy(option.flag);
-  const headContent = files.map(
+  const headContents = files.map(
     (file) => headOfFile(file, sliceStrategy, option.value, readFile));
-  print(log, error, headContent);
+  print(log, error, headContents);
+
+  return getExitCode(headContents);
 };
 
 exports.lines = lines;

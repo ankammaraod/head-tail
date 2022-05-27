@@ -1,6 +1,10 @@
 const { validate, usage, error } =
   require('./validateArgs.js');
 
+const noParameters = () => {
+  return error('noParameters', usage());
+};
+
 const isFlag = (element) => {
   return element.startsWith('-');
 };
@@ -14,7 +18,7 @@ const splitArgs = (arg) => {
 
 const standardize = (rawArgs) => {
   if (rawArgs.length === 0) {
-    throw error('noParameters', usage());
+    throw noParameters();
   }
 
   const args = rawArgs.flatMap(splitArgs);

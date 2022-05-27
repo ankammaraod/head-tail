@@ -34,7 +34,7 @@ const separateFlags = (args) => {
       restOfArgs.push(arg);
     }
   });
-  return [selfFlags, restOfArgs];
+  return { selfFlags, restOfArgs };
 };
 
 const strategy = (flag) => flag === '-c' ? bytes : lines;
@@ -60,8 +60,9 @@ const tailOfFile = (file, sliceStrategy, value, readFile, isReverse) => {
 };
 
 const tailMain = (readFile, log, error, ...args) => {
-  const [selfFlags, restOfArgs] = separateFlags(args);
+  const { selfFlags, restOfArgs } = separateFlags(args);
   const { option, files } = parseArgs(restOfArgs);
+
   const sliceStrategy = strategy(option.flag);
   const isReverse = selfFlags.includes('-r');
 
