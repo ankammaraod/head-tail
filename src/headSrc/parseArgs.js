@@ -12,37 +12,44 @@ const splitArgs = (arg) => {
   return isFlag(arg) ? [arg.slice(0, 2), arg.slice(2)] : arg;
 };
 
-const splitFlagAndValue = (args) => {
-  if (args.length === 0) {
+const standardize = (rawArgs) => {
+  if (rawArgs.length === 0) {
     throw {
       name: 'noParameters',
       message: usage()
     };
   }
-  const formattedArgs = args.flatMap(splitArgs);
-  return formattedArgs.filter(arg => arg.length > 0);
+  const args = rawArgs.flatMap(splitArgs);
+  return args.filter(arg => arg.length > 0);
 };
 
-const parseArgs = (args) => {
-  const splittedArgs = splitFlagAndValue(args);
-  const options = [];
-  let files = [];
+const optionsAndFiles = (args) => {
   let index = 0;
-  while (isFlag(splittedArgs[index])) {
-    const flag = splittedArgs[index];
-    const value = +splittedArgs[index + 1];
+  const options = [];
+  while (isFlag(args[index])) {
+    const flag = args[index];
+    const value = +args[index + 1];
     index = index + 2;
     options.push({ flag, value });
   }
+  const files = args.slice(index);
+  return [options, files];
+};
+
+const parseArgs = (cmdArgs) => {
+  const defaultOption = { flag: '-n', value: 10 };
+  const args = standardize(cmdArgs);
+  const [options, files] = optionsAndFiles(args);
+
   if (options.length === 0) {
-    options.push({ flag: '-n', value: 10 });
+    options.push(defaultOption);
   }
-  files = splittedArgs.slice(index);
   validate({ options, files });
-  return { option: options[options.length - 1], files };
+  const lastOption = options[options.length - 1];
+  return { option: lastOption, files };
 };
 
 exports.parseArgs = parseArgs;
 exports.isFlag = isFlag;
-exports.splitFlagAndValue = splitFlagAndValue;
+exports.standardized = standardize;
 exports.splitArgs = splitArgs;

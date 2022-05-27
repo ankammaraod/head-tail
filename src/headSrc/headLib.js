@@ -1,39 +1,45 @@
-const { splitLines, joinLines } = require('./stringUtils.js');
 const { parseArgs } = require('./parseArgs.js');
 const { print } = require('./print.js');
 
-const extract = (contents, separators, count) => {
-  const lines = splitLines(contents, separators);
-  return joinLines(lines.slice(0, count), separators);
+const joinLines = (contents) => contents.join('\n');
+const splitLines = (contents) => contents.split('\n');
+
+const bytes = (contents, noOfChars) => {
+  return contents.substring(0, noOfChars);
 };
 
-const getSeparator = (flag) => flag === '-n' ? '\n' : '';
+const lines = (contents, noOfLines) => {
+  const lines = splitLines(contents);
+  return joinLines(lines.slice(0, noOfLines));
+};
 
-const head = ({ flag, value }, content) => {
-  const separators = getSeparator(flag);
-  return extract(content, separators, value);
+const strategy = (flag) => flag === '-c' ? bytes : lines;
+
+const headOfFile = (file, sliceStrategy, value, readFile) => {
+  let content;
+  try {
+    content = readFile(file, 'utf8');
+  } catch (error) {
+    return {
+      file,
+      hasRead: false,
+      message: `head: ${file}: No such file or directory`
+    };
+  }
+  const result = sliceStrategy(content, value);
+  return { file, content: result, hasRead: true };
 };
 
 const headMain = (readFile, log, error, ...args) => {
   const { option, files } = parseArgs(args);
-  const headContent = files.map((file) => {
-    let content;
-    try {
-      content = readFile(file, 'utf8');
-    } catch (error) {
-      return {
-        file: file,
-        hasRead: false,
-        message: `head: ${file}: No such file or directory`
-      };
-    }
-    return { file, content: head(option, content), hasRead: true };
-  }
-  );
+  const sliceStrategy = strategy(option.flag);
+  const headContent = files.map(
+    (file) => headOfFile(file, sliceStrategy, option.value, readFile));
   print(log, error, headContent);
 };
 
-exports.head = head;
-exports.extract = extract;
-exports.getSeparator = getSeparator;
+exports.lines = lines;
+exports.bytes = bytes;
+exports.headOfFile = headOfFile;
+exports.strategy = strategy;
 exports.headMain = headMain;

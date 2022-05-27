@@ -41,8 +41,6 @@
 # HEAD
 
 * **TODO**
-  - [ ] remove the getSeperator from the loop executin
-  - [ ] check for --help is not working properly
   - [ ] refactor parseArgs
   - [ ] duplicate mock functions
   - [ ] seperate mock functions into seperate file
@@ -54,6 +52,12 @@
 <br/>
 
 * **DONE**
+  - [x] check for --help is not working properly
+  - [x] extract the while loop into seperate function in head/parseArgs
+  - [x] seperate test from headMain into headMain and headOFFiles
+  - [x] change to lines and bytes structure
+  - [x] extract mapper function into headOfFiles
+  - [x] remove the getSeperator from the loop executin
   - [x] test console.error in head main function
   - [x] write seperate function for error and log
   - [x] extract into print function seperate file
