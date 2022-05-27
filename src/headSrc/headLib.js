@@ -13,7 +13,11 @@ const lines = (contents, noOfLines) => {
   return joinLines(lines.slice(0, noOfLines));
 };
 
-const strategy = (flag) => flag === '-c' ? bytes : lines;
+const sliceBy = (flag) => {
+  //  return { '-c': bytes, '-n': lines }[flag];
+  const references = { '-c': bytes, '-n': lines };
+  return references[flag];
+};
 
 const headOfFile = (file, sliceStrategy, value, readFile) => {
   let content;
@@ -24,17 +28,16 @@ const headOfFile = (file, sliceStrategy, value, readFile) => {
     return {
       file,
       hasRead: false,
-
       message: `head: ${file}: No such file or directory`
     };
   }
   const result = sliceStrategy(content, value);
   return { file, content: result, hasRead: true };
 };
-
+//
 const headMain = (readFile, log, error, ...args) => {
   const { option, files } = parseArgs(args);
-  const sliceStrategy = strategy(option.flag);
+  const sliceStrategy = sliceBy(option.flag);
   const headContent = files.map(
     (file) => headOfFile(file, sliceStrategy, option.value, readFile));
   print(log, error, headContent);
@@ -43,5 +46,5 @@ const headMain = (readFile, log, error, ...args) => {
 exports.lines = lines;
 exports.bytes = bytes;
 exports.headOfFile = headOfFile;
-exports.strategy = strategy;
+exports.strategy = sliceBy;
 exports.headMain = headMain;

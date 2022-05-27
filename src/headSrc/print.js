@@ -16,4 +16,5 @@ const print = (log, error, headContents, isHeaderNeeded = true) => {
     }
   });
 };
+
 exports.print = print;

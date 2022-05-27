@@ -1,16 +1,16 @@
 const assert = require('assert');
-const { char, lines, tailMain, separateFlags }
+const { bytes, lines, tailMain, separateFlags }
   = require('../../src/tailSrc/tailLib.js');
 const { shouldReturn } = require('../headTest/testHeadMain.js');
 const { mockConsoleError, mockConsoleLog } =
   require('../headTest/testPrint.js');
 
-describe('char', () => {
+describe('bytes', () => {
   it('should give the last single character ', () => {
-    assert.deepStrictEqual(char('hello', -1), 'o');
+    assert.deepStrictEqual(bytes('hello', -1), 'o');
   });
   it('should give the last two characters', () => {
-    assert.deepStrictEqual(char('hello', -2), 'lo');
+    assert.deepStrictEqual(bytes('hello', -2), 'lo');
   });
 });
 
@@ -53,7 +53,7 @@ describe('tailMain', () => {
 });
 
 describe('separateFlags', () => {
-  it('should seperate self flags and rest of flag', () => {
+  it('should separate self flags and rest of flag', () => {
     assert.deepStrictEqual(separateFlags(['-n', '-q']), [['-q'], ['-n']]);
     assert.deepStrictEqual(separateFlags(['-q', '-c']), [['-q'], ['-c']]);
     assert.deepStrictEqual(separateFlags(['-q', '-r', '-n', '-c']),

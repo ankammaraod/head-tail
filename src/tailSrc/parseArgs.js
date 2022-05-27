@@ -40,19 +40,18 @@ const isNumOpt = (element) => {
   const numberAsOption = /^[+-]/;
   numberAsOption.test(element);
 };
+const isFlagOrIsNumOpt = (element) => isFlag(element) ||
+  isNumOpt(element);
 
-const parseArgs = (args) => {
-  const splittedArgs = splitFlagAndValue(args);
+const isNotFlagAndIsNumOpt = (element) => !isFlag(element) &&
+  isNumOpt(element);
+
+const parseArgs = (rawArgs) => {
+  const splittedArgs = splitFlagAndValue(rawArgs);
   const options = [];
   let files = [];
   let index = 0;
   let flag; let value;
-
-  const isFlagOrIsNumOpt = (element) => isFlag(element) ||
-    isNumOpt(element);
-
-  const isNotFlagAndIsNumOpt = (element) => !isFlag(element) &&
-    isNumOpt(element);
 
   while (isFlagOrIsNumOpt(splittedArgs[index])) {
     if (isNotFlagAndIsNumOpt(splittedArgs[index])) {
@@ -67,13 +66,15 @@ const parseArgs = (args) => {
     }
     options.push({ flag, value });
   }
+  files = splittedArgs.slice(index);
+
   if (options.length === 0) {
     options.push({ flag: '-n', value: -10 });
   }
-  files = splittedArgs.slice(index);
 
   validate({ options, files });
-  return { option: options[options.length - 1], files };
+  const lastOption = options[options.length - 1];
+  return { option: lastOption, files };
 };
 
 exports.parseArgs = parseArgs;

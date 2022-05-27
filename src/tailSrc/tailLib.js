@@ -13,7 +13,7 @@ const lines = (content, value, isReverse) => {
   return record.join('\n');
 };
 
-const char = (content, value, isReverse) => {
+const bytes = (content, value, isReverse) => {
   let record;
   if (value !== 0) {
     record = content.split('').slice(value).join('');
@@ -37,32 +37,44 @@ const separateFlags = (args) => {
   return [selfFlags, restOfArgs];
 };
 
+const strategy = (flag) => flag === '-c' ? bytes : lines;
+
+const tailOfFile = (file, sliceStrategy, value, readFile, isReverse) => {
+  let content;
+  try {
+    content = readFile(file, 'utf8');
+  } catch (error) {
+    process.exitCode = 1;
+    return {
+      file: file,
+      hasRead: false,
+      message: `tail: ${file}: No such file or directory`
+    };
+  }
+  const result = sliceStrategy(content, value, isReverse);
+  return {
+    file,
+    content: result,
+    hasRead: true
+  };
+};
+
 const tailMain = (readFile, log, error, ...args) => {
   const [selfFlags, restOfArgs] = separateFlags(args);
   const { option, files } = parseArgs(restOfArgs);
-  const funRef = option.flag === '-c' ? char : lines;
-  const tailContent = files.map((file) => {
-    let content;
-    try {
-      content = readFile(file, 'utf8');
-    } catch (error) {
-      return {
-        file: file,
-        hasRead: false,
-        message: `tail: ${file}: No such file or directory`
-      };
-    }
+  const sliceStrategy = strategy(option.flag);
+  const isReverse = selfFlags.includes('-r');
 
-    return {
-      file, content: funRef(content, option.value, selfFlags.includes('-r')),
-      hasRead: true
-    };
-  }
+  const tailOfFiles = files.map((file) =>
+    tailOfFile(file, sliceStrategy, option.value, readFile, isReverse)
   );
-  print(log, error, tailContent, !selfFlags.includes('-q'));
+
+  const isHeaderNeeded = !selfFlags.includes('-q');
+
+  print(log, error, tailOfFiles, isHeaderNeeded);
 };
 
 exports.tailMain = tailMain;
-exports.char = char;
+exports.bytes = bytes;
 exports.lines = lines;
 exports.separateFlags = separateFlags;

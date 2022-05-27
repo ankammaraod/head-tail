@@ -2,6 +2,7 @@ const { headMain } = require('./src/headSrc/headLib');
 const fs = require('fs');
 
 const main = () => {
+  process.exitCode = 0;
   try {
     headMain(
       fs.readFileSync,

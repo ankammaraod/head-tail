@@ -1,8 +1,8 @@
-const { validate, usage } =
+const { validate, usage, error } =
   require('./validateArgs.js');
 
 const isFlag = (element) => {
-  return /-./.test(element);
+  return element.startsWith('-');
 };
 
 const splitArgs = (arg) => {
@@ -14,11 +14,9 @@ const splitArgs = (arg) => {
 
 const standardize = (rawArgs) => {
   if (rawArgs.length === 0) {
-    throw {
-      name: 'noParameters',
-      message: usage()
-    };
+    throw error('noParameters', usage());
   }
+
   const args = rawArgs.flatMap(splitArgs);
   return args.filter(arg => arg.length > 0);
 };
@@ -44,6 +42,7 @@ const parseArgs = (cmdArgs) => {
   if (options.length === 0) {
     options.push(defaultOption);
   }
+
   validate({ options, files });
   const lastOption = options[options.length - 1];
   return { option: lastOption, files };

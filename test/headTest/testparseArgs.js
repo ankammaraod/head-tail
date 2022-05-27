@@ -116,14 +116,14 @@ describe('throwIfFileNotExists', () => {
 
 describe('validateInValidValue', () => {
   it('should throw if value is invalid', () => {
-    assert.throws(() => validateInValidValue({ flag: '-n', value: '0' }),
+    assert.throws(() => validateInValidValue({ flag: '-n', value: 0 }),
       {
         name: 'valueError',
         message: 'head: illegal line count -- 0'
       }
     );
 
-    assert.throws(() => validateInValidValue({ flag: '-c', value: '0' }),
+    assert.throws(() => validateInValidValue({ flag: '-c', value: 0 }),
       {
         name: 'valueError',
         message: 'head: illegal byte count -- 0'
@@ -154,11 +154,11 @@ describe('splitFlagAndValue', () => {
 
 describe('splitArgs', () => {
   it('should format if input is -1', () => {
-    assert.deepStrictEqual(splitArgs(['-1']), ['-n', '1']);
+    assert.deepStrictEqual(splitArgs('-1'), ['-n', '1']);
   });
 
   it('should give file name as it is', () => {
-    assert.deepStrictEqual(splitArgs(['a.txt']), ['a.txt']);
+    assert.deepStrictEqual(splitArgs('a.txt'), 'a.txt');
   });
 });
 
