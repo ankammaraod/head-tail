@@ -1,11 +1,11 @@
 const { print } = require('../headSrc/print.js');
 const { parseArgs } = require('./parseArgs.js');
 
-const lines = (content, value, isReverse) => {
+const lines = (content, count, isReverse) => {
   let record;
   const zeroWithMinus = -0;
-  if (value !== zeroWithMinus) {
-    record = content.split('\n').slice(value);
+  if (count !== zeroWithMinus) {
+    record = content.split('\n').slice(count);
   }
   if (isReverse) {
     return record.reverse().join('\n');
@@ -13,10 +13,10 @@ const lines = (content, value, isReverse) => {
   return record.join('\n');
 };
 
-const bytes = (content, value, isReverse) => {
+const bytes = (content, count, isReverse) => {
   let record;
-  if (value !== 0) {
-    record = content.split('').slice(value).join('');
+  if (count !== 0) {
+    record = content.split('').slice(count).join('');
   }
   if (isReverse) {
     return record.split('\n').reverse().join('\n');
@@ -39,7 +39,7 @@ const separateFlags = (args) => {
 
 const strategy = (flag) => flag === '-c' ? bytes : lines;
 
-const tailOfFile = (file, sliceStrategy, value, readFile, isReverse) => {
+const tailOfFile = (file, sliceStrategy, count, readFile, isReverse) => {
   let content;
   try {
     content = readFile(file, 'utf8');
@@ -51,7 +51,7 @@ const tailOfFile = (file, sliceStrategy, value, readFile, isReverse) => {
       message: `tail: ${file}: No such file or directory`
     };
   }
-  const result = sliceStrategy(content, value, isReverse);
+  const result = sliceStrategy(content, count, isReverse);
   return {
     file,
     content: result,
@@ -67,7 +67,7 @@ const tailMain = (readFile, log, error, ...args) => {
   const isReverse = selfFlags.includes('-r');
 
   const tailOfFiles = files.map((file) =>
-    tailOfFile(file, sliceStrategy, option.value, readFile, isReverse)
+    tailOfFile(file, sliceStrategy, option.count, readFile, isReverse)
   );
 
   const isHeaderNeeded = !selfFlags.includes('-q');

@@ -20,7 +20,7 @@ const sliceBy = (flag) => {
   return references[flag];
 };
 
-const headOfFile = (file, sliceStrategy, value, readFile) => {
+const headOfFile = (file, sliceStrategy, count, readFile) => {
   let content;
   try {
     content = readFile(file, 'utf8');
@@ -32,7 +32,7 @@ const headOfFile = (file, sliceStrategy, value, readFile) => {
       message: `head: ${file}: No such file or directory`
     };
   }
-  const result = sliceStrategy(content, value);
+  const result = sliceStrategy(content, count);
   return { file, content: result, hasRead: true };
 };
 
@@ -50,7 +50,7 @@ const headMain = (readFile, log, error, ...args) => {
   const { option, files } = parseArgs(args);
   const sliceStrategy = sliceBy(option.flag);
   const headContents = files.map(
-    (file) => headOfFile(file, sliceStrategy, option.value, readFile));
+    (file) => headOfFile(file, sliceStrategy, option.count, readFile));
   print(log, error, headContents);
 
   return getExitCode(headContents);

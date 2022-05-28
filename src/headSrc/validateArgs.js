@@ -15,8 +15,8 @@ const illegalCombination = () => {
     'head: can\'t combine line and byte counts');
 };
 
-const valueError = (flag, value) => {
-  return error('valueError', `head: illegal ${flag} count -- ${value}`);
+const valueError = (flag, count) => {
+  return error('valueError', `head: illegal ${flag} count -- ${count}`);
 };
 
 const fileError = () => {
@@ -48,8 +48,8 @@ const validateFileNotExist = (files) => {
 
 const validateInValidValue = (option) => {
   const flagType = option.flag === '-n' ? 'line' : 'byte';
-  if (option.value === 0 || !isFinite(+option.value)) {
-    throw valueError(flagType, option.value);
+  if (option.count === 0 || !isFinite(+option.count)) {
+    throw valueError(flagType, option.count);
   }
 };
 

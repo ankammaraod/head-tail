@@ -22,16 +22,16 @@ const optionsAndFiles = (args) => {
   const options = [];
   while (isFlag(args[index])) {
     const flag = args[index];
-    const value = +args[index + 1];
+    const count = +args[index + 1];
     index = index + 2;
-    options.push({ flag, value });
+    options.push({ flag, count });
   }
   const files = args.slice(index);
   return [options, files];
 };
 
 const parseArgs = (cmdArgs) => {
-  const defaultOption = { flag: '-n', value: 10 };
+  const defaultOption = { flag: '-n', count: 10 };
   const args = standardize(cmdArgs);
   const [options, files] = optionsAndFiles(args);
 

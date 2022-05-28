@@ -21,19 +21,19 @@ const splitFlagAndValue = (args) => {
   return formattedArgs.filter(arg => arg.length > 0);
 };
 
-const parseValue = (value) => {
+const parseValue = (count) => {
   const numberStartsWithPlus = /\+[0-9]/;
-  if (numberStartsWithPlus.test(value)) {
-    if (value === '+0') {
-      return value;
+  if (numberStartsWithPlus.test(count)) {
+    if (count === '+0') {
+      return count;
     }
-    return +value - 1;
+    return +count - 1;
   }
   const numberStartsWithMinus = /-[0-9]/;
-  if (numberStartsWithMinus.test(value)) {
-    return +value;
+  if (numberStartsWithMinus.test(count)) {
+    return +count;
   }
-  return -+value;
+  return -+count;
 };
 
 const isNumOpt = (element) => {
@@ -51,25 +51,25 @@ const parseArgs = (rawArgs) => {
   const options = [];
   let files = [];
   let index = 0;
-  let flag; let value;
+  let flag; let count;
 
   while (isFlagOrIsNumOpt(splittedArgs[index])) {
     if (isNotFlagAndIsNumOpt(splittedArgs[index])) {
       flag = '-n';
       const number = splittedArgs[index];
-      value = ['-0', '+0'].includes(number) ? number : +number - 1;
+      count = ['-0', '+0'].includes(number) ? number : +number - 1;
       index = index + 1;
     } else {
       flag = splittedArgs[index];
-      value = parseValue(splittedArgs[index + 1]);
+      count = parseValue(splittedArgs[index + 1]);
       index = index + 2;
     }
-    options.push({ flag, value });
+    options.push({ flag, count });
   }
   files = splittedArgs.slice(index);
 
   if (options.length === 0) {
-    options.push({ flag: '-n', value: -10 });
+    options.push({ flag: '-n', count: -10 });
   }
 
   validate({ options, files });

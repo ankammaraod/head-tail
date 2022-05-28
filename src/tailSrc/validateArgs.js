@@ -7,8 +7,8 @@ const fileError = () => {
   return error('fileError', usage());
 };
 
-const valueError = (value) => {
-  return error('valueError', `tail: illegal offset -- ${value}`);
+const valueError = (count) => {
+  return error('valueError', `tail: illegal offset -- ${count}`);
 };
 const illegalOption = (option) => {
   return {
@@ -43,10 +43,10 @@ const validateFileNotExist = (files) => {
 };
 
 const validateInValidValue = (option) => {
-  if (!isFinite(+option.value)) {
-    throw valueError(option.value);
+  if (!isFinite(+option.count)) {
+    throw valueError(option.count);
   }
-  if (option.value === '-0') {
+  if (option.count === '-0') {
     process.exit(0);
   }
 };

@@ -3,9 +3,9 @@ const { validateInValidValue, validateFileNotExist, validateOptions }
 const assert = require('assert');
 
 describe('validateInValidValue', () => {
-  it('should throw error if value is invalid', () => {
+  it('should throw error if count is invalid', () => {
     assert.throws(
-      () => validateInValidValue({ flag: '-n', value: 'o' }),
+      () => validateInValidValue({ flag: '-n', count: 'o' }),
       {
         name: 'valueError',
         message: 'head: illegal line count -- o'
@@ -29,7 +29,7 @@ describe('validateFileNotExist', () => {
 describe('validateOptions', () => {
   it('should throw error if illegal flag exists', () => {
     assert.throws(
-      () => validateOptions([{ flag: '-p', value: 1 }]),
+      () => validateOptions([{ flag: '-p', count: 1 }]),
       {
         name: 'illegalOption',
         message:
@@ -42,7 +42,7 @@ describe('validateOptions', () => {
   it('should throw error if illegal combination exists', () => {
     assert.throws(
       () => validateOptions(
-        [{ flag: '-n', value: 1 }, { flag: '-c', value: 1 }]
+        [{ flag: '-n', count: 1 }, { flag: '-c', count: 1 }]
       ),
       {
         name: 'illegalCombination',
