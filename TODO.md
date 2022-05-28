@@ -3,16 +3,18 @@
 * **TODO**
   - [ ] refactor code
   - [ ] remove the repeated code in parser
+  - [ ] refactor the parseArgs of tail
 
 <br/>
 
 * **MAYBE**
 
-  - [ ] consider generic parser
-
+  - [ ] write test for parse and validate of tests
+  
 <br/>
 
 * **DONE**
+  - [x] ~~consider generic parser~~
   - [x] implement for +0 case
   - [x] implement -r option
   - [x] implement -q option

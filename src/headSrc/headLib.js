@@ -25,7 +25,6 @@ const headOfFile = (file, sliceStrategy, count, readFile) => {
   try {
     content = readFile(file, 'utf8');
   } catch (error) {
-    process.exitCode = 1;
     return {
       file,
       hasRead: false,

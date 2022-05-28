@@ -1,9 +1,8 @@
-/* eslint-disable complexity */
 const { validate, noParameters } =
   require('./validateArgs.js');
 
 const isFlag = (element) => {
-  return /-[nc]/.test(element);
+  return /^-[nc]/.test(element);
 };
 
 const formatArgs = (arg) => {
@@ -13,7 +12,7 @@ const formatArgs = (arg) => {
   return isFlag(arg) ? [arg.slice(0, 2), arg.slice(2)] : arg;
 };
 
-const splitFlagAndValue = (args) => {
+const standardize = (args) => {
   if (args.length === 0) {
     throw noParameters();
   }
@@ -37,36 +36,39 @@ const parseValue = (count) => {
 };
 
 const isNumOpt = (element) => {
-  const numberAsOption = /^[+-]/;
-  numberAsOption.test(element);
+  const numberAsOption = /^[+-]\d/;
+  return numberAsOption.test(element);
 };
-const isFlagOrIsNumOpt = (element) => isFlag(element) ||
-  isNumOpt(element);
 
-const isNotFlagAndIsNumOpt = (element) => !isFlag(element) &&
-  isNumOpt(element);
+const isFlagOrIsNumOpt = (element) => isFlag(element) || isNumOpt(element);
 
-const parseArgs = (rawArgs) => {
-  const splittedArgs = splitFlagAndValue(rawArgs);
-  const options = [];
-  let files = [];
+const isNotFlagAndIsNumOpt = (element) => !isFlag(element) && isNumOpt(element);
+
+const optionsAndFiles = (args) => {
   let index = 0;
-  let flag; let count;
+  const options = [];
+  let flag;
+  let count;
+  while (isFlagOrIsNumOpt(args[index])) {
+    if (isNotFlagAndIsNumOpt(args[index])) {
 
-  while (isFlagOrIsNumOpt(splittedArgs[index])) {
-    if (isNotFlagAndIsNumOpt(splittedArgs[index])) {
       flag = '-n';
-      const number = splittedArgs[index];
-      count = ['-0', '+0'].includes(number) ? number : +number - 1;
+      count = parseValue(args[index]);
       index = index + 1;
     } else {
-      flag = splittedArgs[index];
-      count = parseValue(splittedArgs[index + 1]);
+      flag = args[index];
+      count = parseValue(args[index + 1]);
       index = index + 2;
     }
     options.push({ flag, count });
   }
-  files = splittedArgs.slice(index);
+  const files = args.slice(index);
+  return { options, files };
+};
+
+const parseArgs = (cmdArgs) => {
+  const args = standardize(cmdArgs);
+  const { options, files } = optionsAndFiles(args);
 
   if (options.length === 0) {
     options.push({ flag: '-n', count: -10 });
@@ -78,7 +80,11 @@ const parseArgs = (rawArgs) => {
 };
 
 exports.parseArgs = parseArgs;
+exports.optionsAndFiles = optionsAndFiles;
 exports.isFlag = isFlag;
-exports.splitFlagAndValue = splitFlagAndValue;
+exports.isNumOpt = isNumOpt;
+exports.splitFlagAndValue = standardize;
 exports.formatArgs = formatArgs;
-
+exports.isFlagOrIsNumOpt = isFlagOrIsNumOpt;
+exports.parseValue = parseValue;
+exports.isNotFlagAndIsNumOpt = isNotFlagAndIsNumOpt;
