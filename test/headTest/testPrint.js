@@ -54,7 +54,7 @@ describe('print', () => {
     const headContents = [
       { file: 'a.txt', content: 'hello', hasRead: true },
       {
-        file: 'c.txt', content: '', hasRead: false,
+        file: 'c.txt', hasRead: false,
         message: 'head: c.txt: No such file or directory'
       },
       { file: 'b.txt', content: 'hai', hasRead: true }

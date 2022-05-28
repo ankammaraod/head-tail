@@ -142,14 +142,6 @@ describe('splitFlagAndValue', () => {
       ['-n', '1', 'file']);
   });
 
-  it('should throw error if args length is zero', () => {
-    assert.throws(() => standardized([]),
-      {
-        name: 'noParameters',
-        message: usage()
-      }
-    );
-  });
 });
 
 describe('splitArgs', () => {

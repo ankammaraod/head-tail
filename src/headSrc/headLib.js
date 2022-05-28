@@ -1,5 +1,6 @@
 const { parseArgs } = require('./parseArgs.js');
 const { print } = require('./print.js');
+const { noParameters } = require('./validateArgs');
 
 const joinLines = (contents) => contents.join('\n');
 const splitLines = (contents) => contents.split('\n');
@@ -43,6 +44,9 @@ const getExitCode = (headContents) => {
 };
 
 const headMain = (readFile, log, error, ...args) => {
+  if (args.length === 0) {
+    throw noParameters();
+  }
   const { option, files } = parseArgs(args);
   const sliceStrategy = sliceBy(option.flag);
   const headContents = files.map(

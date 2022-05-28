@@ -54,9 +54,12 @@ describe('tailMain', () => {
 
 describe('separateFlags', () => {
   it('should separate self flags and rest of flag', () => {
-    assert.deepStrictEqual(separateFlags(['-n', '-q']), [['-q'], ['-n']]);
-    assert.deepStrictEqual(separateFlags(['-q', '-c']), [['-q'], ['-c']]);
+    assert.deepStrictEqual(separateFlags(['-n', '-q']),
+      { selfFlags: ['-q'], restOfArgs: ['-n'] });
+    assert.deepStrictEqual(separateFlags(['-q', '-c']),
+      { selfFlags: ['-q'], restOfArgs: ['-c'] });
+
     assert.deepStrictEqual(separateFlags(['-q', '-r', '-n', '-c']),
-      [['-q', '-r'], ['-n', '-c']]);
+      { selfFlags: ['-q', '-r'], restOfArgs: ['-n', '-c'] });
   });
 });

@@ -36,6 +36,10 @@ const validateOptions = (options) => {
   }
 };
 
+const noParameters = () => {
+  return error('noParameters', usage());
+};
+
 const validateFileNotExist = (files) => {
   if (files.length === 0) {
     throw fileError();
@@ -61,3 +65,4 @@ exports.validateInValidValue = validateInValidValue;
 exports.validate = validate;
 exports.usage = usage;
 exports.error = error;
+exports.noParameters = noParameters;

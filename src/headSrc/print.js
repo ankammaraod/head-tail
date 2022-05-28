@@ -2,23 +2,17 @@ const header = (record) => {
   return `==>${record.file}<==\n${record.content}`;
 };
 
-const format = (headContents) => {
-  if (headContents.length < 2) {
-    return headContents;
-  }
+const noHeader = (headContent) => headContent.content;
 
-  return headContents.map((headContent) => {
-    return headContent.hasRead ? header(headContent) : headContent;
-  }
-  );
-};
+const getFormatter = (headContents) =>
+  headContents.length < 2 ? noHeader : header;
 
 const print = (log, error, headContents, isHeaderNeeded = true) => {
-  const formattedHeadContents = format(headContents);
+  const formatter = getFormatter(headContents);
 
-  formattedHeadContents.forEach((record) => {
+  headContents.forEach((record) => {
     if (record.hasRead) {
-      isHeaderNeeded ? log(record) : log(record.content);
+      isHeaderNeeded ? log(formatter(record)) : log(record.content);
     } else {
       error(record.message + '\n');
     }
